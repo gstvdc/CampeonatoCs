@@ -20,10 +20,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#0b0e14]/90 backdrop-blur-md border-b border-amber-500/20 py-3 shadow-lg'
-          : 'bg-gradient-to-b from-[#0b0e14]/90 via-[#0b0e14]/50 to-transparent py-4'
+          ? 'bg-[#0b0e14]/95 backdrop-blur-md border-b border-amber-500/20 py-3 shadow-lg'
+          : 'bg-[#0b0e14]/50 py-5'
       }`}
     >
       <div className="max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between">
