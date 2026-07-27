@@ -103,10 +103,7 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                     </div>
                   </div>
                   
-                  <div className="flex justify-between items-center text-xs font-rajdhani font-bold text-slate-400">
-                    <span className="uppercase">
-                      Pref: <span className="text-slate-200">{player.captain_name}</span>
-                    </span>
+                  <div className="flex justify-end items-center text-xs font-rajdhani font-bold text-slate-400">
                     {player.role && (
                       <span className="uppercase bg-slate-800 px-2 py-0.5 rounded text-slate-300">
                         {player.role}
