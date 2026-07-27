@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Users } from 'lucide-react';
+import { PlayersListModal } from './PlayersListModal';
 import { getCaptains, getInterestedPlayers, CaptainProfile, InterestedPlayer } from '@/lib/supabase';
 
 interface CaptainsShowcaseProps {
@@ -16,6 +17,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
   const [captains, setCaptains] = useState<CaptainProfile[]>([]);
   const [interestedPlayers, setInterestedPlayers] = useState<InterestedPlayer[]>([]);
   const [loading, setLoading] = useState(true);
+  const [playersModalOpen, setPlayersModalOpen] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -61,8 +63,21 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
               <UserPlus className="w-4 h-4 fill-black" />
               <span>TENHO INTERESSE NO DRAFT</span>
             </button>
+            <button
+              onClick={() => setPlayersModalOpen(true)}
+              className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-amber-500 border border-amber-500/50 hover:bg-amber-500/10 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Users className="w-4 h-4" />
+              <span>VER INSCRITOS</span>
+            </button>
           </div>
         </div>
+
+        <PlayersListModal 
+          isOpen={playersModalOpen} 
+          onClose={() => setPlayersModalOpen(false)} 
+          players={interestedPlayers} 
+        />
 
         {/* Captain Cards Carousel (Overlapping 3D effect) */}
         {loading ? (
