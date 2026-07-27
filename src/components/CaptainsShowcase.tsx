@@ -56,7 +56,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
 
             <button
               onClick={() => onOpenInterestModal()}
-              className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] flex items-center gap-2"
+              className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] flex items-center gap-2 cursor-pointer"
             >
               <UserPlus className="w-4 h-4 fill-black" />
               <span>TENHO INTERESSE NO DRAFT</span>

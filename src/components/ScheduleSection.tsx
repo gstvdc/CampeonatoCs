@@ -45,10 +45,7 @@ export const ScheduleSection: React.FC = () => {
         
         {/* Title */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded bg-[#161b26] border border-amber-500/40 text-xs font-rajdhani font-bold text-amber-400 uppercase tracking-widest">
-            <Calendar className="w-4 h-4 text-amber-400" />
-            <span>EVENTO EM DIA ÚNICO • SÁBADO, 08 DE AGOSTO</span>
-          </div>
+
           <h2 className="font-oswald font-bold text-3xl sm:text-5xl text-white tracking-tight uppercase">
             PROGRAMAÇÃO DO <span className="text-amber-400">SÁBADO (08/08)</span>
           </h2>
