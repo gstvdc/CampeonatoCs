@@ -22,7 +22,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const [playerForm, setPlayerForm] = useState({
     captain_name: 'Gusta',
     player_name: '',
-    contact_phone: '',
+    premier_points: '',
     steam_id: '',
     role: 'Rifler',
   });
@@ -34,8 +34,8 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     setLoading(true);
     setErrorMsg('');
 
-    if (!playerForm.player_name || !playerForm.contact_phone || !playerForm.steam_id) {
-      setErrorMsg('Por favor, preencha seu Nome/Nick, WhatsApp e ID/Link da Steam.');
+    if (!playerForm.player_name || !playerForm.premier_points || !playerForm.steam_id) {
+      setErrorMsg('Por favor, preencha seu Nome/Nick, Pontos no Premier e ID/Link da Steam.');
       setLoading(false);
       return;
     }
@@ -44,7 +44,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       const res = await registerInterestedPlayer({
         captain_name: playerForm.captain_name,
         player_name: playerForm.player_name,
-        contact_phone: playerForm.contact_phone,
+        premier_points: Number(playerForm.premier_points) || 0,
         steam_id: playerForm.steam_id,
         role: playerForm.role,
       });
@@ -174,14 +174,14 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
                   <div>
                     <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
-                      WhatsApp para Contato *
+                      Pontos no Premier (CS2) *
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       required
-                      placeholder="Ex: (11) 99999-0000"
-                      value={playerForm.contact_phone}
-                      onChange={(e) => setPlayerForm({ ...playerForm, contact_phone: e.target.value })}
+                      placeholder="Ex: 15000"
+                      value={playerForm.premier_points}
+                      onChange={(e) => setPlayerForm({ ...playerForm, premier_points: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded bg-[#0b0e14] border border-slate-700 text-white font-rajdhani text-sm focus:border-amber-400 focus:outline-none"
                     />
                   </div>

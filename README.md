@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS public.interested_players (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   captain_name text NOT NULL,
   player_name text NOT NULL,
-  contact_phone text NOT NULL,
+  premier_points integer NOT NULL,
   steam_id text NOT NULL,
   role text,
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL

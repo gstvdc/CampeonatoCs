@@ -15,7 +15,7 @@ export interface InterestedPlayer {
   id?: string;
   captain_name: string;
   player_name: string;
-  contact_phone: string;
+  premier_points: number;
   steam_id: string;
   role?: string;
   created_at?: string;
