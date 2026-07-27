@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --font-oswald: 'Oswald', sans-serif;
+  --font-rajdhani: 'Rajdhani', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  
+  --color-cs-dark: #0b0e14;
+  --color-cs-navy: #111622;
+  --color-cs-yellow: #f59e0b;
+  --color-cs-amber: #f97316;
+  --color-cs-gold: #fde047;
+}
+
+body {
+  background-color: var(--color-cs-dark);
+  color: #f8fafc;
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+  selection-background-color: #f59e0b;
+  selection-color: #000000;
+}
+
+/* Typography Classes */
+.font-oswald {
+  font-family: var(--font-oswald);
+}
+
+.font-rajdhani {
+  font-family: var(--font-rajdhani);
+}
+
+/* CS2 Signature Yellow Glass & Panels */
+.glass-panel {
+  background: rgba(15, 20, 30, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.glass-panel-cs-yellow {
+  background: rgba(22, 18, 10, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+}
+
+/* Tactical Corner Brackets (CS2 Official Yellow Style) */
+.tactical-corners {
+  position: relative;
+}
+
+.tactical-corners::before,
+.tactical-corners::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  pointer-events: none;
+}
+
+.tactical-corners::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid #f59e0b;
+  border-left: 2px solid #f59e0b;
+}
+
+.tactical-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid #f59e0b;
+  border-right: 2px solid #f59e0b;
+}
+
+/* Custom Tactical Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0e14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f59e0b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fde047;
+}
