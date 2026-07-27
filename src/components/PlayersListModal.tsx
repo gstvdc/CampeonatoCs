@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Users, Trophy } from 'lucide-react';
+import { X, Users, Trophy, Trash2 } from 'lucide-react';
 import type { InterestedPlayer } from '@/lib/supabase';
 
 interface PlayersListModalProps {
@@ -20,6 +20,29 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
   const filteredPlayers = players.filter(
     (p) => !captainNames.some((c) => p.player_name.toLowerCase().includes(c))
   ).sort((a, b) => b.premier_points - a.premier_points);
+
+  const handleDelete = async (id: string, name: string) => {
+    const password = window.prompt(`Digite a senha de administrador para remover ${name}:`);
+    if (!password) return;
+
+    try {
+      const res = await fetch('/api/delete-player', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, password })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        alert('Jogador removido com sucesso!');
+        window.location.reload(); // Recarrega a página para atualizar a lista
+      } else {
+        alert(`Erro: ${data.error}`);
+      }
+    } catch (err) {
+      alert('Erro ao tentar remover o jogador.');
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
@@ -65,9 +88,18 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                     <span className="font-oswald font-bold text-white text-lg truncate pr-2">
                       {player.player_name}
                     </span>
-                    <div className="flex items-center gap-1 bg-[#161b26] px-2 py-0.5 rounded border border-amber-500/20 text-amber-400 font-rajdhani font-bold text-xs whitespace-nowrap">
-                      <Trophy className="w-3 h-3" />
-                      {player.premier_points.toLocaleString('pt-BR')} PTS
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 bg-[#161b26] px-2 py-0.5 rounded border border-amber-500/20 text-amber-400 font-rajdhani font-bold text-xs whitespace-nowrap">
+                        <Trophy className="w-3 h-3" />
+                        {player.premier_points.toLocaleString('pt-BR')} PTS
+                      </div>
+                      <button
+                        onClick={() => handleDelete(player.id, player.player_name)}
+                        className="p-1 rounded bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors cursor-pointer"
+                        title="Remover inscrito"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
                   
