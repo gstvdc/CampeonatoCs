@@ -1,9 +1,9 @@
-# 🏆 Copa Lucas Moura - 2ª Edição (CS2)
+# Copa Lucas Moura - 2ª Edição (CS2)
 
 Plataforma oficial da **2ª Edição da Copa Lucas Moura** de Counter-Strike 2. 
 O sistema foi desenvolvido para apresentar os capitães oficiais do torneio e permitir que os jogadores da comunidade se inscrevam e demonstrem interesse em participar do **Draft ao vivo**.
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 Este projeto foi construído com as melhores e mais modernas tecnologias do ecossistema web:
 
@@ -13,14 +13,14 @@ Este projeto foi construído com as melhores e mais modernas tecnologias do ecos
 - **[Lucide Icons](https://lucide.dev/)** para a iconografia
 - **[Supabase](https://supabase.com/)** como Banco de Dados e API (PostgreSQL)
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 - **Mural de Capitães:** Exibição dos 4 capitães oficiais (Gusta, HPS, Léo, Zane) com suas pontuações e perfis.
 - **Sistema de Inscrição no Draft:** Formulário para jogadores se cadastrarem com seus Nicks, Steam ID, WhatsApp e função (Role) preferida no CS2.
 - **Integração Real-time:** As inscrições vão diretamente para o banco de dados oficial no Supabase.
 - **Design Premium:** UI temática de Counter-Strike 2, dark mode, animações e responsividade.
 
-## 🛠️ Como rodar o projeto localmente
+## Como rodar o projeto localmente
 
 Para rodar este projeto na sua máquina, você precisará ter o [Node.js](https://nodejs.org/) instalado.
 
@@ -50,7 +50,7 @@ Para rodar este projeto na sua máquina, você precisará ter o [Node.js](https:
 5. **Acesse no navegador**
    Abra [http://localhost:3000](http://localhost:3000) e veja o projeto rodando!
 
-## 🗄️ Estrutura do Banco de Dados (Supabase SQL)
+## Estrutura do Banco de Dados (Supabase SQL)
 
 Se for criar um banco novo, rode este comando no **SQL Editor** do Supabase para criar a tabela de jogadores interessados:
 
@@ -71,4 +71,4 @@ CREATE POLICY "Insercao publica de jogadores" ON public.interested_players FOR I
 ```
 
 ---
-*Desenvolvido para a comunidade de CS2.* 🎮
+*Desenvolvido para a comunidade de CS2.*
