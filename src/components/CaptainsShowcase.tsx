@@ -136,11 +136,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                         <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Interessados</span>
                         <span className="text-white font-oswald text-xl sm:text-2xl font-bold">{teamInterested.length}</span>
                       </div>
-                      <div className="w-px h-8 bg-amber-900/40"></div>
-                      <div className="flex flex-col items-center">
-                        <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Vagas</span>
-                        <span className="text-white font-oswald text-xl sm:text-2xl font-bold">{Math.max(0, 4 - teamInterested.length)}</span>
-                      </div>
+
                       <div className="w-px h-8 bg-amber-900/40"></div>
                       <div className="flex flex-col items-center">
                         <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Premier</span>
