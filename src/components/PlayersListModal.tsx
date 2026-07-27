@@ -1,6 +1,5 @@
 import React from 'react';
-import { X, Users, Trophy, Trash2, Pencil } from 'lucide-react';
-import { EditPlayerModal } from './EditPlayerModal';
+import { X, Users, Trophy, Trash2 } from 'lucide-react';
 import type { InterestedPlayer } from '@/lib/supabase';
 
 interface PlayersListModalProps {
@@ -14,8 +13,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
   onClose,
   players,
 }) => {
-  const [editingPlayer, setEditingPlayer] = React.useState<InterestedPlayer | null>(null);
-
   if (!isOpen) return null;
 
   // Filtrar capitães da lista de inscritos, caso tenham se registrado
@@ -97,13 +94,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                         {player.premier_points.toLocaleString('pt-BR')} PTS
                       </div>
                       <button
-                        onClick={() => setEditingPlayer(player)}
-                        className="p-1 rounded bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 transition-colors cursor-pointer"
-                        title="Editar inscrito"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      <button
                         onClick={() => handleDelete(player.id, player.player_name)}
                         className="p-1 rounded bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors cursor-pointer"
                         title="Remover inscrito"
@@ -129,16 +119,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
           )}
         </div>
       </div>
-
-      <EditPlayerModal
-        isOpen={!!editingPlayer}
-        onClose={() => setEditingPlayer(null)}
-        player={editingPlayer}
-        onSuccess={() => {
-          setEditingPlayer(null);
-          window.location.reload(); // Recarrega para buscar os dados novos
-        }}
-      />
     </div>
   );
 };
