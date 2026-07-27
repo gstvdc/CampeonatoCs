@@ -11,6 +11,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Campos obrigatórios ausentes.' }, { status: 400 });
     }
 
+    if (!supabase) {
+      return NextResponse.json({ success: false, error: 'Banco de dados não configurado no servidor.' }, { status: 500 });
+    }
+
     // Retrieve IP Address from headers
     const forwardedFor = request.headers.get('x-forwarded-for');
     const realIp = request.headers.get('x-real-ip');
