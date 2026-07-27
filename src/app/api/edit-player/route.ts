@@ -42,14 +42,19 @@ export async function POST(request: Request) {
       role
     };
 
-    const { error: updateError } = await supabase
+    const { data, error: updateError } = await supabase
       .from('interested_players')
       .update(updates)
-      .eq('id', id);
+      .eq('id', id)
+      .select();
 
     if (updateError) {
       console.error('Error updating player:', updateError);
       return NextResponse.json({ success: false, error: 'Erro ao atualizar dados.' }, { status: 500 });
+    }
+
+    if (!data || data.length === 0) {
+      return NextResponse.json({ success: false, error: 'Não foi possível atualizar. Banco de dados bloqueou a edição (falta de permissão UPDATE no RLS).' }, { status: 400 });
     }
 
     return NextResponse.json({ success: true });
