@@ -14,7 +14,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
       {/* Official CS2 Wallpaper Background */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/hero-bg.png"
+          src="/backgrounds/hero.png"
           alt="CS2 Official Wallpaper"
           className="w-full h-full object-cover opacity-35 mix-blend-screen scale-105"
         />
@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl transition-all">
               <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#0b0e14]">
                 <img
-                  src="/banner-frame.png"
+                  src="/assets/banner-frame.png"
                   alt="Copa Lucas Moura Banner"
                   className="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -83,7 +83,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             {/* 3D Pop-out Trophy Image */}
             <div className="absolute -top-10 -right-6 sm:-top-14 sm:-right-8 xl:-top-16 xl:-right-10 w-56 sm:w-72 xl:w-80 pointer-events-none z-20 transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-2">
               <img
-                src="/trophy-popout.png"
+                src="/assets/trophy-popout.png"
                 alt="Troféu CS2 3D Popout"
                 className="w-full h-auto object-contain filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] drop-shadow-[0_0_40px_rgba(245,158,11,0.4)]"
               />

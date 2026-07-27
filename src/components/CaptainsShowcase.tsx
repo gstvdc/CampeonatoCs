@@ -96,13 +96,13 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                     {/* Static Background Layer */}
                     <div 
                       className="absolute inset-0 bg-cover bg-center z-0 opacity-60"
-                      style={{ backgroundImage: `url('/captain-bg.png')` }}
+                      style={{ backgroundImage: `url('/backgrounds/captain-card.png')` }}
                     />
                     
                     {/* Captain Avatar (Transparent PNG) */}
                     <div className="absolute bottom-0 left-0 right-0 flex justify-center z-10 pointer-events-none">
                       <img
-                        src={c.name === 'Gusta' ? '/gusta-removebg-preview.png' : c.name === 'HPS' ? '/hps-removebg-preview.png' : c.name === 'Léo' ? '/leo-removebg-preview.png' : c.name === 'Zane' ? '/zane-removebg-preview.png' : (c.avatar_url || '/logo.png')}
+                        src={c.avatar_url || '/logo.png'}
                         alt={`Capitão ${c.name}`}
                         className="h-[340px] w-auto object-contain opacity-90 group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-700"
                       />
