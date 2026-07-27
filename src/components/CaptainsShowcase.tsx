@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Crown, Users, Heart, Plus, UserPlus, ShieldCheck } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 import { getCaptains, getInterestedPlayers, CaptainProfile, InterestedPlayer } from '@/lib/supabase';
 
 interface CaptainsShowcaseProps {
@@ -15,7 +15,6 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
 }) => {
   const [captains, setCaptains] = useState<CaptainProfile[]>([]);
   const [interestedPlayers, setInterestedPlayers] = useState<InterestedPlayer[]>([]);
-  const [likes, setLikes] = useState<{ [key: string]: boolean }>({});
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -33,13 +32,9 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
   }, [refreshTrigger]);
-
-  const toggleLike = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setLikes((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
 
   return (
     <section id="capitaes" className="py-20 bg-[#0b0e14] relative border-t border-slate-800">
@@ -77,12 +72,9 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
         ) : (
           <div className="flex flex-wrap justify-center items-center gap-6 lg:gap-8 py-10">
             {captains.map((c, idx) => {
-              const isLiked = likes[c.name];
               const teamInterested = interestedPlayers.filter(
                 (p) => p.captain_name.toLowerCase() === c.name.toLowerCase()
               );
-              
-              const isTopRanked = idx === 0; // Just rank #1
 
               return (
                 <div
@@ -99,6 +91,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                     
                     {/* Captain Avatar (Transparent PNG) */}
                     <div className="absolute bottom-0 left-0 right-0 flex justify-center z-10 pointer-events-none">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={c.avatar_url || '/logo.png'}
                         alt={`Capitão ${c.name}`}

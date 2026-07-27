@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShieldCheck, Trophy, ChevronRight, Users } from 'lucide-react';
+import { ShieldCheck, ChevronRight, Users } from 'lucide-react';
 import { CountdownTimer } from './CountdownTimer';
 
 interface HeroSectionProps {
@@ -13,6 +13,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
     <section id="inicio" className="relative min-h-screen pt-36 sm:pt-40 pb-20 flex flex-col justify-between overflow-hidden bg-[#0b0e14]">
       {/* Official CS2 Wallpaper Background */}
       <div className="absolute inset-0 z-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/backgrounds/hero.png"
           alt="CS2 Official Wallpaper"
@@ -71,6 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             {/* Main Frame */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl transition-all">
               <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#0b0e14]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/assets/banner-frame.png"
                   alt="Copa Lucas Moura Banner"
@@ -82,6 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
 
             {/* 3D Pop-out Trophy Image */}
             <div className="absolute -top-10 -right-6 sm:-top-14 sm:-right-8 xl:-top-16 xl:-right-10 w-56 sm:w-72 xl:w-80 pointer-events-none z-20 transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/trophy-popout.png"
                 alt="Troféu CS2 3D Popout"

@@ -104,9 +104,9 @@ export async function registerInterestedPlayer(
       const { data, error } = await supabase.from('interested_players').insert([player]).select();
       if (error) throw error;
       if (data) return { success: true, data: data[0] };
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error("Error registering interested player:", e);
-      return { success: false, error: e.message || "Erro desconhecido ao registrar interesse." };
+      return { success: false, error: (e as Error).message || "Erro desconhecido ao registrar interesse." };
     }
   }
   return { success: false, error: "Banco de dados não configurado." };

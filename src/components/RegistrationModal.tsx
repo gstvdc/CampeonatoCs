@@ -58,7 +58,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             origin: { y: 0.6 },
             colors: ['#f59e0b', '#eab308', '#f97316'],
           });
-        } catch (e) {}
+        } catch { /* ignore */ }
 
         setTimeout(() => {
           onSuccess();
@@ -66,7 +66,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       } else {
         setErrorMsg(res.error || 'Falha ao registrar interesse. Tente novamente.');
       }
-    } catch (err: any) {
+    } catch {
       setErrorMsg('Erro inesperado.');
     } finally {
       setLoading(false);

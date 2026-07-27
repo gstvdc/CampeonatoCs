@@ -14,6 +14,7 @@ export const Footer: React.FC = () => {
           {/* Brand Col: Logo Image Only with Seamless Background Blend */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/logo.png"
                 alt="Logo Copa Lucas Moura"

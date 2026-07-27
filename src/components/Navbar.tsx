@@ -30,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
         
         {/* Clean Logo Image Only (Background blended smoothly, side text removed) */}
         <a href="#inicio" className="flex items-center group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo.png"
             alt="Logo Copa Lucas Moura"
