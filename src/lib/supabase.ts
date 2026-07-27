@@ -11,15 +11,16 @@ export interface CaptainProfile {
   created_at?: string;
 }
 
-export interface InterestedPlayer {
-  id?: string;
+export type InterestedPlayer = {
+  id: string;
   captain_name: string;
   player_name: string;
   premier_points: number;
   steam_id: string;
   role?: string;
-  created_at?: string;
-}
+  ip_address?: string;
+  created_at: string;
+};
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';

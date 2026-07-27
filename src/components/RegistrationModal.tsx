@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { UserPlus, X, CheckCircle2, AlertCircle } from 'lucide-react';
-import { registerInterestedPlayer } from '@/lib/supabase';
 import confetti from 'canvas-confetti';
 
 interface RegistrationModalProps {
@@ -41,15 +40,15 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     }
 
     try {
-      const res = await registerInterestedPlayer({
-        captain_name: playerForm.captain_name,
-        player_name: playerForm.player_name,
-        premier_points: Number(playerForm.premier_points) || 0,
-        steam_id: playerForm.steam_id,
-        role: playerForm.role,
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(playerForm),
       });
 
-      if (res.success) {
+      const res = await response.json();
+
+      if (response.ok && res.success) {
         setSubmittedSuccess(true);
         try {
           confetti({
