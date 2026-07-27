@@ -145,7 +145,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     <select
                       value={playerForm.captain_name}
                       onChange={(e) => setPlayerForm({ ...playerForm, captain_name: e.target.value })}
-                      className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
+                      className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
                     >
                       <option value="Gusta">Capitão Gusta (Time Gusta)</option>
                       <option value="HPS">Capitão HPS (Time HPS)</option>
@@ -165,7 +165,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       placeholder="Ex: FalleN"
                       value={playerForm.player_name}
                       onChange={(e) => setPlayerForm({ ...playerForm, player_name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
                     />
                   </div>
 
@@ -179,7 +179,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       placeholder="Ex: 15000"
                       value={playerForm.premier_points}
                       onChange={(e) => setPlayerForm({ ...playerForm, premier_points: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
                     />
                   </div>
 
@@ -193,7 +193,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       placeholder="https://steamcommunity.com/id/seu-nick"
                       value={playerForm.steam_id}
                       onChange={(e) => setPlayerForm({ ...playerForm, steam_id: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
                     />
                   </div>
 
@@ -204,7 +204,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     <select
                       value={playerForm.role}
                       onChange={(e) => setPlayerForm({ ...playerForm, role: e.target.value })}
-                      className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
+                      className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
                     >
                       <option value="Rifler">Rifler</option>
                       <option value="AWPer">AWPer</option>
