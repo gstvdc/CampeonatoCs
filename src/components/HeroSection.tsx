@@ -55,11 +55,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             </button>
 
             <a
-              href="#confirmados"
+              href="#capitaes"
               className="px-7 py-5 rounded font-oswald font-bold text-base tracking-wider uppercase text-slate-200 bg-[#161c2b]/90 hover:bg-[#1f283d] border border-amber-500/40 hover:border-amber-400 transition-all cursor-pointer flex items-center gap-2"
             >
               <Users className="w-5 h-5 text-amber-400" />
-              <span>VER TIMES CONFIRMADOS</span>
+              <span>VER CAPITÃES</span>
             </a>
           </div>
         </div>

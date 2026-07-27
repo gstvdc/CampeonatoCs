@@ -51,18 +51,8 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#destaques" className="hover:text-amber-400 transition-colors">
-                  Destaques do Torneio
-                </a>
-              </li>
-              <li>
                 <a href="#cronograma" className="hover:text-amber-400 transition-colors">
                   Cronograma & Datas
-                </a>
-              </li>
-              <li>
-                <a href="#confirmados" className="hover:text-amber-400 transition-colors">
-                  Times Confirmados
                 </a>
               </li>
               <li>
@@ -88,26 +78,14 @@ export const Footer: React.FC = () => {
                 <Tv className="w-4 h-4 text-purple-400" />
                 <span>Twitch Official Stream</span>
               </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 p-2.5 rounded bg-[#0e121e] border border-slate-800 hover:border-red-500 text-slate-200 hover:text-red-400 transition-all"
-              >
-                <Video className="w-4 h-4 text-red-500" />
-                <span>YouTube CS2 Live</span>
-              </a>
             </div>
           </div>
 
         </div>
 
         {/* Bottom Credits Line */}
-        <div className="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-xs font-semibold text-slate-400 gap-4">
+        <div className="pt-8 border-t border-slate-800/60 flex items-center justify-center text-xs font-semibold text-slate-400">
           <p>© 2026 Copa Lucas Moura - Todos os direitos reservados. CS2 é marca registrada da Valve Corporation.</p>
-          <p className="flex items-center gap-1">
-            Desenvolvido com <Heart className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> para a comunidade de eSports.
-          </p>
         </div>
 
       </div>
