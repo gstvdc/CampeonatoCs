@@ -5,9 +5,9 @@ import type { InterestedPlayer } from '@/lib/supabase';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { captain_name, player_name, premier_points, steam_id, role } = body;
+    const { captain_name, player_name, premier_points, steam_id, role, player_password } = body;
 
-    if (!captain_name || !player_name || premier_points === undefined || !steam_id) {
+    if (!captain_name || !player_name || premier_points === undefined || !steam_id || !player_password) {
       return NextResponse.json({ success: false, error: 'Campos obrigatórios ausentes.' }, { status: 400 });
     }
 
@@ -49,7 +49,8 @@ export async function POST(request: Request) {
       premier_points: Number(premier_points),
       steam_id,
       role,
-      ip_address: ip
+      ip_address: ip,
+      player_password
     };
 
     // Insert into DB

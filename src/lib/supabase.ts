@@ -19,6 +19,7 @@ export type InterestedPlayer = {
   steam_id: string;
   role?: string;
   ip_address?: string;
+  player_password?: string;
   created_at: string;
 };
 
