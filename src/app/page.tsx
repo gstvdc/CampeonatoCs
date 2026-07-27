@@ -9,29 +9,16 @@ import { ScheduleSection } from '@/components/ScheduleSection';
 import { RulesSection } from '@/components/RulesSection';
 import { RegistrationModal } from '@/components/RegistrationModal';
 import { Footer } from '@/components/Footer';
-import { getCaptains, CaptainProfile } from '@/lib/supabase';
 
 export default function Home() {
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
-  const [modalInitialTab, setModalInitialTab] = useState<'player' | 'captain'>('player');
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [captains, setCaptains] = useState<CaptainProfile[]>([]);
-
-  useEffect(() => {
-    getCaptains().then(setCaptains);
-  }, [refreshTrigger]);
 
   const handleRegisterSuccess = () => {
     setRefreshTrigger((prev) => prev + 1);
   };
 
-  const openPlayerInterestModal = (captainName?: string) => {
-    setModalInitialTab('player');
-    setRegisterModalOpen(true);
-  };
-
-  const openCaptainRegisterModal = () => {
-    setModalInitialTab('captain');
+  const openPlayerInterestModal = () => {
     setRegisterModalOpen(true);
   };
 
@@ -39,7 +26,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#0b0e14] text-slate-100 flex flex-col selection:bg-amber-500 selection:text-black">
       {/* Navbar Header */}
       <Navbar
-        onOpenRegister={() => openPlayerInterestModal()}
+        onOpenRegister={openPlayerInterestModal}
       />
 
       {/* Hero Section */}
@@ -51,7 +38,6 @@ export default function Home() {
       {/* Captains Showcase with Draft Registration */}
       <CaptainsShowcase
         onOpenInterestModal={openPlayerInterestModal}
-        onOpenCaptainRegisterModal={openCaptainRegisterModal}
         refreshTrigger={refreshTrigger}
       />
 
@@ -64,13 +50,11 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Registration Modal with Player Interest and Captain Registration Tabs */}
+      {/* Registration Modal */}
       <RegistrationModal
         isOpen={registerModalOpen}
         onClose={() => setRegisterModalOpen(false)}
         onSuccess={handleRegisterSuccess}
-        captains={captains}
-        initialTab={modalInitialTab}
       />
     </main>
   );

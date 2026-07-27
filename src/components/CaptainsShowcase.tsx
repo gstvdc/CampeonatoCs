@@ -6,13 +6,11 @@ import { getCaptains, getInterestedPlayers, CaptainProfile, InterestedPlayer } f
 
 interface CaptainsShowcaseProps {
   onOpenInterestModal: (captainName?: string) => void;
-  onOpenCaptainRegisterModal: () => void;
   refreshTrigger: number;
 }
 
 export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
   onOpenInterestModal,
-  onOpenCaptainRegisterModal,
   refreshTrigger,
 }) => {
   const [captains, setCaptains] = useState<CaptainProfile[]>([]);
