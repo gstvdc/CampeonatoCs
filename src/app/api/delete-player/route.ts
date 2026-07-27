@@ -20,14 +20,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Supabase não configurado.' }, { status: 500 });
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('interested_players')
       .delete()
-      .eq('id', id);
+      .eq('id', id)
+      .select();
 
     if (error) {
       console.error('Error deleting player:', error);
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+
+    if (!data || data.length === 0) {
+      return NextResponse.json({ success: false, error: 'Não foi possível remover. Verifique as permissões de exclusão (RLS) no Supabase ou se o ID existe.' }, { status: 400 });
     }
 
     return NextResponse.json({ success: true });
