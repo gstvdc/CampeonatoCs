@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, UserPlus, X, CheckCircle2, AlertCircle } from 'lucide-react';
+import { UserPlus, X, CheckCircle2, AlertCircle } from 'lucide-react';
 import { registerInterestedPlayer } from '@/lib/supabase';
 import confetti from 'canvas-confetti';
 
@@ -80,9 +80,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
             <div>
               <h3 className="font-oswald font-bold text-lg text-white uppercase">
                 INSCRIÇÃO DA COPA LUCAS MOURA 2ª EDIÇÃO
@@ -148,7 +145,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     <select
                       value={playerForm.captain_name}
                       onChange={(e) => setPlayerForm({ ...playerForm, captain_name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded bg-[#0b0e14] border border-slate-700 text-white font-rajdhani text-sm focus:border-amber-400 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
                     >
                       <option value="Gusta">Capitão Gusta (Time Gusta)</option>
                       <option value="HPS">Capitão HPS (Time HPS)</option>
@@ -168,7 +165,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       placeholder="Ex: FalleN"
                       value={playerForm.player_name}
                       onChange={(e) => setPlayerForm({ ...playerForm, player_name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded bg-[#0b0e14] border border-slate-700 text-white font-rajdhani text-sm focus:border-amber-400 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
                     />
                   </div>
 
@@ -182,7 +179,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       placeholder="Ex: 15000"
                       value={playerForm.premier_points}
                       onChange={(e) => setPlayerForm({ ...playerForm, premier_points: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded bg-[#0b0e14] border border-slate-700 text-white font-rajdhani text-sm focus:border-amber-400 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
                     />
                   </div>
 
@@ -196,7 +193,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       placeholder="https://steamcommunity.com/id/seu-nick"
                       value={playerForm.steam_id}
                       onChange={(e) => setPlayerForm({ ...playerForm, steam_id: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded bg-[#0b0e14] border border-slate-700 text-white font-rajdhani text-sm focus:border-amber-400 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
                     />
                   </div>
 
@@ -207,7 +204,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     <select
                       value={playerForm.role}
                       onChange={(e) => setPlayerForm({ ...playerForm, role: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded bg-[#0b0e14] border border-slate-700 text-white font-rajdhani text-sm focus:border-amber-400 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner"
                     >
                       <option value="Rifler">Rifler</option>
                       <option value="AWPer">AWPer</option>
@@ -230,7 +227,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 rounded bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-oswald font-bold text-sm uppercase tracking-wider transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:shadow-[0_0_30px_rgba(245,158,11,0.4)] cursor-pointer"
+                  className="w-full py-3.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-oswald font-bold text-sm uppercase tracking-widest transition-all disabled:opacity-50 shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] cursor-pointer active:scale-[0.98]"
                 >
                   {loading ? 'PROCESSANDO...' : 'CADASTRAR INTERESSE NO DRAFT'}
                 </button>
