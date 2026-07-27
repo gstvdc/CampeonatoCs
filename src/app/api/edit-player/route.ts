@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
   try {
@@ -12,6 +13,22 @@ export async function POST(request: Request) {
 
     if (!supabase) {
       return NextResponse.json({ success: false, error: 'Supabase não configurado.' }, { status: 500 });
+    }
+
+    const ip = getClientIp(request);
+    const rateLimit = checkRateLimit(ip);
+    if (!rateLimit.success) {
+      return NextResponse.json({ success: false, error: rateLimit.error }, { status: 429 });
+    }
+
+    if (
+      captain_name.length > 50 ||
+      player_name.length > 50 ||
+      steam_id.length > 100 ||
+      player_password.length > 50 ||
+      (role && role.length > 20)
+    ) {
+      return NextResponse.json({ success: false, error: 'Campos excederam o tamanho máximo permitido.' }, { status: 400 });
     }
 
     // Buscar a senha atual do jogador no banco

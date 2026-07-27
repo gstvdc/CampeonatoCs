@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 import type { InterestedPlayer } from '@/lib/supabase';
 
 export async function POST(request: Request) {
@@ -15,14 +16,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Banco de dados não configurado no servidor.' }, { status: 500 });
     }
 
-    // Retrieve IP Address from headers
-    const forwardedFor = request.headers.get('x-forwarded-for');
-    const realIp = request.headers.get('x-real-ip');
-    let ip = forwardedFor ? forwardedFor.split(',')[0].trim() : realIp;
+    // Rate Limiting
+    const ip = getClientIp(request);
+    const rateLimit = checkRateLimit(ip);
+    if (!rateLimit.success) {
+      return NextResponse.json({ success: false, error: rateLimit.error }, { status: 429 });
+    }
 
-    if (!ip) {
-      // Fallback for local development or missing headers
-      ip = 'unknown';
+    // Input Sanitization (Tamanho máximo)
+    if (
+      captain_name.length > 50 ||
+      player_name.length > 50 ||
+      steam_id.length > 100 ||
+      player_password.length > 50 ||
+      (role && role.length > 20)
+    ) {
+      return NextResponse.json({ success: false, error: 'Campos excederam o tamanho máximo permitido.' }, { status: 400 });
     }
 
     // If it's not a local / unknown IP, check for existing registration

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
   try {
@@ -12,6 +13,12 @@ export async function POST(request: Request) {
 
     if (!supabase) {
       return NextResponse.json({ success: false, error: 'Supabase não configurado.' }, { status: 500 });
+    }
+
+    const ip = getClientIp(request);
+    const rateLimit = checkRateLimit(ip);
+    if (!rateLimit.success) {
+      return NextResponse.json({ success: false, error: rateLimit.error }, { status: 429 });
     }
 
     const { data: player, error: fetchError } = await supabase
