@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     if (
       captain_name.length > 50 ||
       player_name.length > 50 ||
-      steam_id.length > 100 ||
+      (steam_id && steam_id.length > 100) ||
       player_password.length > 50 ||
       (role && role.length > 20)
     ) {

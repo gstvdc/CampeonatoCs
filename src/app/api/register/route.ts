@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { captain_name, player_name, premier_points, steam_id, role, player_password } = body;
 
-    if (!captain_name || !player_name || premier_points === undefined || !steam_id || !player_password) {
+    if (!captain_name || !player_name || premier_points === undefined || !player_password) {
       return NextResponse.json({ success: false, error: 'Campos obrigatórios ausentes.' }, { status: 400 });
     }
 
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     if (
       captain_name.length > 50 ||
       player_name.length > 50 ||
-      steam_id.length > 100 ||
+      (steam_id && steam_id.length > 100) ||
       player_password.length > 50 ||
       (role && role.length > 20)
     ) {

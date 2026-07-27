@@ -70,7 +70,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     setLoading(true);
     setErrorMsg('');
 
-    if (!playerForm.player_name || !playerForm.premier_points || !playerForm.steam_id || !playerForm.player_password) {
+    if (!playerForm.player_name || !playerForm.premier_points || !playerForm.player_password) {
       setErrorMsg('Por favor, preencha todos os campos obrigatórios.');
       setLoading(false);
       return;
@@ -372,11 +372,10 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
                       <div>
                         <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
-                          ID ou Link da Steam *
+                          ID ou Link da Steam (Opcional)
                         </label>
                         <input
                           type="text"
-                          required
                           placeholder="https://steamcommunity.com/id/seu-nick"
                           value={playerForm.steam_id}
                           onChange={(e) => setPlayerForm({ ...playerForm, steam_id: e.target.value })}
