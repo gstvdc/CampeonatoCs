@@ -15,6 +15,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
   const [loadingStats, setLoadingStats] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'jogadores' | 'capitaes'>('jogadores');
+  const [detailTab, setDetailTab] = useState<'overview' | 'matches'>('overview');
   const [resultsPerPage, setResultsPerPage] = useState('20');
   const [isSyncing, setIsSyncing] = useState(false);
 
@@ -88,6 +89,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
       // Reset state for new player
       setLoadingMatches(true);
       setLoadingStats(true);
+      setDetailTab('overview');
       const steamIdMatch = selectedPlayer.steam_id ? selectedPlayer.steam_id.match(/\d{17}/) : null;
       const rawSteamId = steamIdMatch ? steamIdMatch[0] : null;
       
@@ -128,8 +130,6 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
           <img src="/logo.png" alt="Copa LM" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(245,158,11,0.3)]" />
         </Link>
         
-        <div className="text-[9px] font-bold text-slate-600 uppercase tracking-widest mb-4">Menu</div>
-        
         <nav className="flex flex-col gap-4 w-full items-center">
           <Link href="/" className="p-2.5 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Voltar para Início">
             <Home className="w-5 h-5" />
@@ -168,12 +168,6 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
               </div>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
-            <span>Jogadores</span> 
-            <span className="text-slate-700">/</span> 
-            <span className="text-amber-500/80">Busca Avançada</span>
-          </div>
           
           <h1 className="text-3xl font-oswald font-black text-white uppercase tracking-wide mb-6">
             {searchQuery ? `Resultados para "${searchQuery}"` : 'Todos os Inscritos'}
@@ -199,10 +193,6 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
         {/* List Actions */}
         <div className="px-6 py-4 flex items-center gap-4 text-xs font-bold text-slate-400">
           <span>{filteredAndSearchedPlayers.length} Resultados</span>
-          <button className="flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded bg-[#121214] hover:bg-white/5 hover:text-white transition-colors uppercase tracking-wider cursor-pointer">
-            <Users className="w-3.5 h-3.5" />
-            Adicionar à lista
-          </button>
           
           <button 
             onClick={handleSync}
@@ -219,7 +209,6 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
           <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="border-b border-white/5 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                <th className="pb-3 px-4 w-8"></th>
                 <th className="pb-3 px-4 w-[250px]">Jogador</th>
                 <th className="pb-3 px-4">K/D Ratio</th>
                 <th className="pb-3 px-4">Win Rate</th>
@@ -234,10 +223,6 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                   onClick={() => setSelectedPlayer(player)}
                   className={`border-b border-white/5 transition-colors cursor-pointer group ${selectedPlayer?.id === player.id ? 'bg-white/5 border-l-2 border-l-amber-500' : 'hover:bg-white/5 border-l-2 border-l-transparent'}`}
                 >
-                  <td className="py-3 px-4 text-slate-700 font-mono text-xs">
-                    {/* Fake checkbox/icon placeholder */}
-                    <div className="w-4 h-4 rounded border border-white/10 group-hover:border-white/30 transition-colors"></div>
-                  </td>
                   <td className="py-3 px-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded bg-[#121214] border border-white/10 flex items-center justify-center font-oswald text-base text-slate-400 shadow-inner group-hover:border-amber-500/30 transition-colors">
@@ -346,15 +331,26 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
 
             {/* Profile Tabs */}
             <div className="flex gap-6 border-b border-white/5 text-xs font-bold uppercase tracking-wider mb-6">
-              <button className="pb-3 text-white border-b-2 border-white cursor-pointer">Overview</button>
-              <button className="pb-3 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">Stats Performance</button>
-              <button className="pb-3 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">Matches</button>
+              <button 
+                onClick={() => setDetailTab('overview')}
+                className={`pb-3 cursor-pointer transition-colors ${detailTab === 'overview' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
+              >
+                Overview
+              </button>
+              <button 
+                onClick={() => setDetailTab('matches')}
+                className={`pb-3 cursor-pointer transition-colors ${detailTab === 'matches' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
+              >
+                Matches
+              </button>
             </div>
 
             <div className="space-y-6">
               
-              {/* Leetify Stats Dashboard */}
-              <div className="mb-8 bg-[#121214] border border-white/5 rounded-xl p-6 relative">
+              {detailTab === 'overview' && (
+                <>
+                  {/* Leetify Stats Dashboard */}
+                  <div className="mb-8 bg-[#121214] border border-white/5 rounded-xl p-6 relative">
                  {loadingStats && (
                    <div className="absolute inset-0 bg-[#121214]/80 flex items-center justify-center z-10 rounded-xl">
                       <RefreshCw className="w-8 h-8 animate-spin text-amber-500" />
@@ -422,12 +418,11 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
               </div>
 
               {/* Position / Radar Chart */}
-                <div className="mb-8">
-                  <div className="flex justify-between items-center mb-3">
-                     <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500">Position & Attributes</h3>
-                     <span className="text-[10px] font-bold text-slate-400 bg-white/5 px-2 py-1 rounded border border-white/5">Highlight v.</span>
-                  </div>
-                  <div className="bg-[#121214] border border-white/5 rounded-xl p-4 flex flex-col items-center h-[260px] relative">
+                  <div className="mb-8">
+                    <div className="flex items-center mb-3">
+                       <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500">Position & Attributes</h3>
+                    </div>
+                    <div className="bg-[#121214] border border-white/5 rounded-xl p-4 flex flex-col items-center h-[320px] relative">
                      {loadingStats && (
                        <div className="absolute inset-0 bg-[#121214]/80 flex items-center justify-center z-10 rounded-xl">
                           <RefreshCw className="w-8 h-8 animate-spin text-amber-500" />
@@ -485,23 +480,26 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                   )}
                 </div>
               </div>
+                </>
+              )}
 
               {/* Match History List */}
-              <div>
-                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3">Recent Matches</h3>
-                <div className="bg-[#121214] border border-white/5 rounded-xl overflow-hidden">
-                  {loadingMatches ? (
-                     <div className="p-8 text-center text-slate-500 text-xs font-bold animate-pulse uppercase tracking-wider">
-                       Buscando histórico...
-                     </div>
-                  ) : matches.length === 0 ? (
-                     <div className="p-8 text-center text-slate-500 text-xs font-bold uppercase tracking-wider">
-                       <Activity className="w-5 h-5 mx-auto mb-2 opacity-30" />
-                       Nenhuma partida
-                     </div>
-                  ) : (
-                    <div className="max-h-[200px] overflow-y-auto custom-scrollbar">
-                      {matches.map((match: any, index: number) => {
+              {detailTab === 'matches' && (
+                <div className="flex flex-col h-full">
+                  <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3">Recent Matches</h3>
+                  <div className="bg-[#121214] border border-white/5 rounded-xl overflow-hidden flex-1">
+                    {loadingMatches ? (
+                       <div className="p-12 text-center text-slate-500 text-xs font-bold animate-pulse uppercase tracking-wider">
+                         Buscando histórico...
+                       </div>
+                    ) : matches.length === 0 ? (
+                       <div className="p-12 text-center text-slate-500 text-xs font-bold uppercase tracking-wider">
+                         <Activity className="w-8 h-8 mx-auto mb-3 opacity-30" />
+                         Nenhuma partida registrada
+                       </div>
+                    ) : (
+                      <div className="overflow-y-auto custom-scrollbar h-[500px]">
+                        {matches.map((match: any, index: number) => {
                         const isWin = match.outcome === 'win';
                         const isTie = match.outcome === 'tie';
                         const scoreStr = match.score && match.score.length >= 2 ? `${match.score[0]}:${match.score[1]}` : 'N/A';
@@ -516,9 +514,12 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                                 {match.map_name ? match.map_name.replace('de_', '') : 'Unknown'}
                               </span>
                             </div>
-                            <div className="text-right">
-                              <span className="block font-mono text-[10px] text-white">
-                                Rating: <span className={match.leetify_rating > 0 ? "text-green-400" : "text-rose-400"}>{match.leetify_rating > 0 ? '+' : ''}{(match.leetify_rating || 0).toFixed(2)}</span>
+                            <div className="text-right flex items-center gap-4">
+                              <span className="block font-mono text-[10px] text-slate-400">
+                                {match.kills}K - {match.deaths}D
+                              </span>
+                              <span className={`block font-rajdhani font-bold text-sm ${match.rating >= 1.0 ? 'text-emerald-400' : 'text-slate-400'}`}>
+                                {match.rating ? Number(match.rating).toFixed(2) : '-'}
                               </span>
                             </div>
                           </div>
@@ -528,6 +529,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                   )}
                 </div>
               </div>
+              )}
 
             </div>
           </div>
