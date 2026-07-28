@@ -13,7 +13,7 @@ export const CS2Badge: React.FC<CS2BadgeProps> = ({ points }) => {
 
   return (
     <div 
-      className="relative inline-flex items-center justify-center skew-x-[-12deg] bg-[#1a1e28] h-[28px] sm:h-[32px] px-3 sm:px-4 shadow-lg ml-2 overflow-hidden"
+      className="relative inline-flex items-center justify-center skew-x-[-12deg] bg-[#1a1e28] h-[28px] sm:h-[32px] px-3 sm:px-4 shadow-lg overflow-hidden"
     >
       {/* Soft gradient background matching CS2 style */}
       <div 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserPlus, X, CheckCircle2, AlertCircle, LogIn, Pencil } from 'lucide-react';
+import { UserPlus, X, CheckCircle2, AlertCircle, LogIn, Pencil, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { getInterestedPlayers, InterestedPlayer } from '@/lib/supabase';
 
@@ -35,6 +35,12 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   // Login State
   const [selectedPlayerId, setSelectedPlayerId] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const filteredSearchPlayers = players.filter(p => 
+    p.player_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // Fetch players when modal opens
   useEffect(() => {
@@ -53,6 +59,8 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       });
       setLoginPassword('');
       setSelectedPlayerId('');
+      setSearchQuery('');
+      setIsDropdownOpen(false);
       
       const fetchPlayers = async () => {
         const data = await getInterestedPlayers();
@@ -207,7 +215,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 INSCRIÇÃO DA COPA LUCAS MOURA 2ª EDIÇÃO
               </h3>
               <p className="text-xs font-rajdhani font-bold text-amber-400 uppercase">
-                DRAFT AO VIVO E TORNEIO • SÁBADO, DIA 08 DE AGOSTO
+                DRAFT AO VIVO DIA 07/08 • TORNEIO DIA 08/08
               </p>
             </div>
           </div>
@@ -274,21 +282,54 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       <span>AUTENTICAR PARA EDITAR</span>
                     </h4>
 
-                    <div>
+                    <div className="relative">
                       <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
                         Selecione seu Nome/Nick *
                       </label>
-                      <select
-                        required
-                        value={selectedPlayerId}
-                        onChange={(e) => setSelectedPlayerId(e.target.value)}
-                        className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all cursor-pointer"
-                      >
-                        <option value="">-- Selecione na lista --</option>
-                        {players.map(p => (
-                          <option key={p.id} value={p.id}>{p.player_name}</option>
-                        ))}
-                      </select>
+                      <div className="w-full relative">
+                        <input
+                          type="text"
+                          placeholder="Digite para buscar..."
+                          value={isDropdownOpen ? searchQuery : (players.find(p => p.id === selectedPlayerId)?.player_name || '')}
+                          onFocus={() => {
+                            setIsDropdownOpen(true);
+                            setSearchQuery('');
+                          }}
+                          onBlur={() => {
+                            setTimeout(() => setIsDropdownOpen(false), 200);
+                          }}
+                          onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setIsDropdownOpen(true);
+                          }}
+                          className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all cursor-text"
+                        />
+                        <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+
+                      {isDropdownOpen && (
+                        <div className="absolute z-50 w-full mt-1 bg-[#0b0e14] border border-slate-700/60 rounded-lg shadow-xl max-h-48 overflow-y-auto custom-scrollbar">
+                          {filteredSearchPlayers.length > 0 ? (
+                            filteredSearchPlayers.map(p => (
+                              <div
+                                key={p.id}
+                                className="px-4 py-2.5 hover:bg-amber-500/10 cursor-pointer text-white font-rajdhani text-sm border-b border-slate-800 last:border-0"
+                                onClick={() => {
+                                  setSelectedPlayerId(p.id);
+                                  setSearchQuery(p.player_name);
+                                  setIsDropdownOpen(false);
+                                }}
+                              >
+                                {p.player_name}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="px-4 py-3 text-slate-400 font-rajdhani text-sm text-center italic">
+                              Nenhum jogador encontrado.
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div>
@@ -330,7 +371,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   <div className="space-y-4">
                     <h4 className="font-oswald font-bold text-xs text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-1 flex items-center gap-2">
                       {mode === 'edit' ? <Pencil className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
-                      <span>{mode === 'edit' ? 'ALTERAR DADOS DO CADASTRO' : 'CADASTRO DE INTERESSE PARA O DRAFT (SÁBADO 08/08)'}</span>
+                      <span>{mode === 'edit' ? 'ALTERAR DADOS DO CADASTRO' : 'CADASTRO DE INTERESSE PARA O DRAFT (SEXTA 07/08)'}</span>
                     </h4>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -403,7 +444,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       </div>
 
                       {mode === 'register' && (
-                        <div>
+                        <div className="sm:col-span-2">
                           <label className="block text-xs font-rajdhani font-bold text-amber-400 uppercase mb-1">
                             Senha Pessoal (Para Edição) *
                           </label>

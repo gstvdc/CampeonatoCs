@@ -14,18 +14,18 @@ export const ScheduleSection: React.FC = () => {
       active: true,
     },
     {
-      date: '08/08 SÁBADO',
-      time: '13:00 BRT',
+      date: '07/08 SEXTA',
+      time: '19:00 BRT',
       title: 'DRAFT AO VIVO DOS CAPITÃES',
-      desc: 'Sorteio presencial e ao vivo dos times entre os capitães com transmissão.',
-      status: 'GAME DAY',
+      desc: 'Sorteio ao vivo dos times entre os capitães com transmissão.',
+      status: 'DRAFT DAY',
       active: false,
     },
     {
       date: '08/08 SÁBADO',
-      time: '15:00 BRT',
+      time: '13:00 BRT',
       title: 'FASE DE GRUPOS & ELIMINATÓRIAS MD3',
-      desc: 'Confrontos eliminatórios diretos em servidores dedicados 128-tick / CS2 Sub-tick com vetos de mapas.',
+      desc: 'Confrontos eliminatórios diretos em servidores dedicados CS2 Sub-tick com vetos de mapas.',
       status: 'GAME DAY',
       active: false,
     },
@@ -47,10 +47,10 @@ export const ScheduleSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
 
           <h2 className="font-oswald font-bold text-3xl sm:text-5xl text-white tracking-tight uppercase">
-            PROGRAMAÇÃO DO <span className="text-amber-400">SÁBADO (08/08)</span>
+            PROGRAMAÇÃO DO <span className="text-amber-400">FIM DE SEMANA</span>
           </h2>
           <p className="text-slate-400 font-rajdhani font-semibold text-lg">
-            Todo o torneio ocorrerá em um único dia épico: Draft ao vivo à tarde e Grande Final à noite!
+            O evento épico acontecerá em dois dias: Draft ao vivo na sexta-feira (07/08) e Torneio no sábado (08/08)!
           </p>
         </div>
 

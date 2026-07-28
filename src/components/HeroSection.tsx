@@ -40,7 +40,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
 
           {/* Subtext Description: Flexible for any number of captains */}
           <p className="text-slate-200 font-rajdhani font-bold text-lg sm:text-2xl max-w-2xl leading-relaxed drop-shadow-md">
-            Os melhores capitães. 1 dia único. Inscreva-se no Draft e dispute o troféu exclusivo, 08 de Agosto.
+            Os melhores capitães. 2 dias épicos. Inscreva-se no Draft (07/08) e dispute o torneio (08/08).
           </p>
 
           {/* Action Buttons */}

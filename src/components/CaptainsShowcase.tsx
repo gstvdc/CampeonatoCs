@@ -50,7 +50,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
               CAPITÃES & <span className="text-amber-400">JOGADORES DO DRAFT</span>
             </h2>
             <p className="text-slate-400 font-rajdhani font-semibold text-base sm:text-lg mt-1">
-              Cadastre seu interesse para entrar no Draft do torneio no Sábado (08/08). Os capitães montarão suas equipes ao vivo!
+              Cadastre seu interesse para entrar no Draft do torneio na Sexta-feira (07/08). Os capitães montarão suas equipes ao vivo!
             </p>
           </div>
 
@@ -130,9 +130,9 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                   </div>
 
                   {/* Body Content (Stats + Button) */}
-                  <div className="px-6 pb-6 pt-3 flex flex-col bg-gradient-to-b from-[#0a0702] to-[#050401] relative z-40 flex-1">
+                  <div className="px-6 py-4 flex flex-col bg-gradient-to-b from-[#0a0702] to-[#050401] relative z-40 flex-1">
                     {/* Stats Row */}
-                    <div className="flex items-center justify-center w-full px-2 mb-6 border-t border-amber-900/40 py-3">
+                    <div className="flex-1 flex items-center justify-center w-full border-t border-amber-900/40 pt-4">
                       <div className="flex flex-col items-center">
                         <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Premier</span>
                         <CS2Badge points={c.premier_points} />
