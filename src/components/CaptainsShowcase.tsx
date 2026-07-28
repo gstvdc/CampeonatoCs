@@ -130,7 +130,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                     {/* Stats Row */}
                     <div className="flex-1 flex items-center justify-center w-full border-t border-amber-900/40 pt-4">
                       <div className="flex flex-col items-center">
-                        <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Premier</span>
+                        <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-widest mb-1.5 font-bold">Premier</span>
                         <CS2Badge points={c.premier_points} />
                       </div>
                     </div>

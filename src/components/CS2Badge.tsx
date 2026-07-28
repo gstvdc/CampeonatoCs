@@ -13,7 +13,7 @@ export const CS2Badge: React.FC<CS2BadgeProps> = ({ points }) => {
 
   return (
     <div 
-      className="relative inline-flex items-center justify-center skew-x-[-12deg] bg-[#1a1e28] h-[28px] sm:h-[32px] px-3 sm:px-4 shadow-lg overflow-hidden"
+      className="relative inline-flex items-center justify-center skew-x-[-12deg] bg-[#1a1e28] h-[36px] sm:h-[44px] px-5 sm:px-8 shadow-lg overflow-hidden"
     >
       {/* Soft gradient background matching CS2 style */}
       <div 
@@ -23,16 +23,16 @@ export const CS2Badge: React.FC<CS2BadgeProps> = ({ points }) => {
 
       {/* Left accent lines */}
       <div className="absolute left-0 top-0 bottom-0 flex">
-        <div className="w-[3px] sm:w-[4px] h-full" style={{ backgroundColor: colorHex }}></div>
-        <div className="w-[1.5px] h-full bg-[#1a1e28]"></div>
-        <div className="w-[2px] h-full" style={{ backgroundColor: colorHex, opacity: 0.9 }}></div>
+        <div className="w-[4px] sm:w-[5px] h-full" style={{ backgroundColor: colorHex }}></div>
+        <div className="w-[2px] h-full bg-[#1a1e28]"></div>
+        <div className="w-[3px] h-full" style={{ backgroundColor: colorHex, opacity: 0.9 }}></div>
       </div>
       
       {/* Right/Top/Bottom Borders to give the box feel */}
       <div className="absolute inset-0 border-r border-t border-b border-white/5 pointer-events-none"></div>
 
       <span 
-        className="relative z-10 ml-2 font-oswald italic font-bold tracking-wider text-sm sm:text-base skew-x-[12deg] drop-shadow-md"
+        className="relative z-10 ml-3 font-oswald italic font-bold tracking-wider text-lg sm:text-2xl skew-x-[12deg] drop-shadow-md"
         style={{ color: colorHex }}
       >
         {formattedPoints}
