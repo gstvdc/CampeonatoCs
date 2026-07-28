@@ -25,7 +25,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   // Player Form State (used for both register and edit)
   const [playerForm, setPlayerForm] = useState({
     id: '', // Used for edit
-    captain_name: 'Gusta',
+    captain_name: 'Qualquer',
     player_name: '',
     premier_points: '',
     steam_id: '',
@@ -45,7 +45,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       setErrorMsg('');
       setPlayerForm({
         id: '',
-        captain_name: 'Gusta',
+        captain_name: 'Qualquer',
         player_name: '',
         premier_points: '',
         steam_id: '',
@@ -126,7 +126,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         if (p) {
           setPlayerForm({
             id: p.id,
-            captain_name: p.captain_name || 'Gusta',
+            captain_name: p.captain_name || 'Qualquer',
             player_name: p.player_name || '',
             premier_points: p.premier_points?.toString() || '',
             steam_id: p.steam_id || '',
@@ -327,7 +327,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       {/* Select Captain */}
                       <div className="sm:col-span-2">
                         <label className="block text-xs font-rajdhani font-bold text-amber-400 uppercase mb-1">
-                          Selecione o Capitão de Sua Preferência *
+                          Selecione o Capitão de Sua Preferência <span className="text-slate-400 normal-case tracking-normal font-medium">(A escolha é anônima)</span> *
                         </label>
                         <select
                           value={playerForm.captain_name}
