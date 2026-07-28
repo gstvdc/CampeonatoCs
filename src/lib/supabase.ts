@@ -58,6 +58,36 @@ export const FIXED_CAPTAINS: CaptainProfile[] = [
 ];
 
 export async function getCaptains(): Promise<CaptainProfile[]> {
+  if (isSupabaseConfigured() && supabase) {
+    const { data } = await supabase
+      .from('interested_players')
+      .select('*')
+      .in('player_name', ['GUSTA', 'HPS', 'SOUZ', 'ZANE']);
+    
+    if (data && data.length > 0) {
+      const captainMapping: Record<string, Partial<CaptainProfile>> = {
+        'GUSTA': { color: '#f59e0b', avatar_url: '/captains/gusta.png', team_name: 'TIME GUSTA' },
+        'HPS': { color: '#3b82f6', avatar_url: '/captains/hps.png', team_name: 'TIME HPS' },
+        'SOUZ': { color: '#ef4444', avatar_url: '/captains/souz.png', team_name: 'TIME SOUZ' },
+        'ZANE': { color: '#a855f7', avatar_url: '/captains/zane.png', team_name: 'TIME ZANE' },
+      };
+      
+      const mappedCaptains = data.map(p => ({
+        id: `cap-${p.player_name.toLowerCase()}`,
+        name: p.player_name,
+        team_name: captainMapping[p.player_name]?.team_name || `TIME ${p.player_name}`,
+        steam_id: p.steam_id,
+        avatar_url: captainMapping[p.player_name]?.avatar_url || '/captains/default.png',
+        color: captainMapping[p.player_name]?.color || '#ffffff',
+        premier_points: p.premier_points,
+      }));
+      
+      // Keep exact order
+      const order = ['GUSTA', 'HPS', 'SOUZ', 'ZANE'];
+      mappedCaptains.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
+      return mappedCaptains;
+    }
+  }
   return FIXED_CAPTAINS;
 }
 

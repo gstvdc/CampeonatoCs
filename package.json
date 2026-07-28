@@ -11,11 +11,16 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.110.9",
     "canvas-confetti": "^1.9.4",
+    "cheerio": "^1.2.0",
     "lucide-react": "^1.27.0",
     "next": "16.2.12",
+    "puppeteer": "^25.4.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-hot-toast": "^2.6.0"
+    "react-hot-toast": "^2.6.0",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

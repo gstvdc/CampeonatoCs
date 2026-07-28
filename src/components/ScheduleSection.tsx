@@ -24,8 +24,8 @@ export const ScheduleSection: React.FC = () => {
     {
       date: '08/08 SÁBADO',
       time: '13:00 BRT',
-      title: 'FASE DE GRUPOS & ELIMINATÓRIAS MD3',
-      desc: 'Confrontos eliminatórios diretos em servidores dedicados CS2 Sub-tick com vetos de mapas.',
+      title: 'ELIMINATÓRIAS MD1 (DOUBLE ELIMINATION)',
+      desc: 'Confrontos diretos no formato chaveamento duplo (Upper e Lower Bracket) em servidores dedicados CS2 Sub-tick com vetos de mapas.',
       status: 'GAME DAY',
       active: false,
     },

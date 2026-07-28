@@ -3,6 +3,7 @@ import { X, Users, Trash2, Crosshair, Swords, Brain, Zap, ShieldPlus, EyeOff, An
 import { useRouter } from 'next/navigation';
 import type { InterestedPlayer } from '@/types';
 import { CS2Badge } from './CS2Badge';
+import Link from 'next/link';
 
 interface PlayersListModalProps {
   isOpen: boolean;
@@ -143,16 +144,14 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                   <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-500/30 group-hover:via-amber-500/40 to-transparent transition-colors"></div>
 
                   <div className="flex justify-between items-start relative z-10">
-                    {player.steam_id ? (
-                      <a
-                        href={player.steam_id.startsWith('http') ? player.steam_id : `https://steamcommunity.com/id/${player.steam_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {player.id ? (
+                      <Link
+                        href={`/player/${player.id}`}
                         className="font-oswald font-bold text-white hover:text-amber-400 text-xl tracking-wide truncate pr-2 hover:underline transition-colors flex items-center gap-2"
-                        title="Ver perfil na Steam"
+                        title="Ver Perfil Detalhado"
                       >
                         {player.player_name}
-                      </a>
+                      </Link>
                     ) : (
                       <span className="font-oswald font-bold text-white text-xl tracking-wide truncate pr-2 group-hover:text-amber-400 transition-colors">
                         {player.player_name}

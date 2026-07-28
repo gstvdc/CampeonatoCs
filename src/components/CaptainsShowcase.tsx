@@ -1,23 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import { UserPlus, Users } from 'lucide-react';
-import { PlayersListModal } from './PlayersListModal';
+import React from 'react';
+import { Users } from 'lucide-react';
 import { CS2Badge } from './CS2Badge';
+import Link from 'next/link';
 import type { CaptainProfile, InterestedPlayer } from '@/types';
 
 interface CaptainsShowcaseProps {
-  onOpenInterestModal: (captainName?: string) => void;
   captains: CaptainProfile[];
-  interestedPlayers: InterestedPlayer[];
 }
 
 export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
-  onOpenInterestModal,
   captains,
-  interestedPlayers,
 }) => {
-  const [playersModalOpen, setPlayersModalOpen] = useState(false);
 
   return (
     <section id="capitaes" className="py-20 bg-[#0b0e14] relative border-t border-slate-800">
@@ -34,30 +29,15 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-
-            <button
-              onClick={() => onOpenInterestModal()}
-              className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <UserPlus className="w-4 h-4 fill-black" />
-              <span>TENHO INTERESSE NO DRAFT</span>
-            </button>
-            <button
-              onClick={() => setPlayersModalOpen(true)}
+            <Link
+              href="/players"
               className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-amber-500 border border-amber-500/50 hover:bg-amber-500/10 transition-all flex items-center gap-2 cursor-pointer"
             >
               <Users className="w-4 h-4" />
               <span>VER INSCRITOS</span>
-            </button>
+            </Link>
           </div>
         </div>
-
-        <PlayersListModal 
-          isOpen={playersModalOpen} 
-          onClose={() => setPlayersModalOpen(false)} 
-          players={interestedPlayers} 
-        />
-
 
           <div className="flex flex-wrap justify-center items-center gap-6 lg:gap-8 py-10">
             {captains.map((c, idx) => {

@@ -11,11 +11,12 @@ export interface CaptainProfile {
 
 export type InterestedPlayer = {
   id: string;
-  captain_name: string;
   player_name: string;
   premier_points: number;
-  steam_id: string;
+  steam_id?: string;
   role?: string;
+  kd_ratio?: number;
+  win_rate?: number;
   ip_address?: string;
   player_password?: string;
   created_at: string;

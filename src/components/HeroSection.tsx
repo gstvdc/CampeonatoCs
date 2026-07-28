@@ -4,11 +4,7 @@ import React from 'react';
 import { ShieldCheck, ChevronRight, Users } from 'lucide-react';
 import { CountdownTimer } from './CountdownTimer';
 
-interface HeroSectionProps {
-  onOpenRegister: () => void;
-}
-
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
+export const HeroSection = () => {
   return (
     <section id="inicio" className="relative min-h-screen pt-36 sm:pt-40 pb-20 flex flex-col justify-between overflow-hidden bg-[#0b0e14]">
       <div className="absolute inset-0 z-0">
@@ -39,14 +35,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <button
-              onClick={onOpenRegister}
+            <a
+              href="#inscreva-se"
               className="group relative px-9 py-5 rounded font-oswald font-black text-base sm:text-lg tracking-wider uppercase text-black bg-amber-500 hover:bg-amber-400 transition-all cursor-pointer flex items-center gap-3"
             >
               <ShieldCheck className="w-6 h-6 fill-black" />
               <span>GARANTIR VAGA NO DRAFT</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
 
             <a
               href="#capitaes"

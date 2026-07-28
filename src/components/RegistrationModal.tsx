@@ -30,7 +30,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     player_name: '',
     premier_points: '',
     steam_id: '',
-    role: '',
     player_password: '',
   });
 
@@ -39,7 +38,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isPointsDropdownOpen, setIsPointsDropdownOpen] = useState(false);
-  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
 
   const pointsOptions = [
     { value: "", label: "Selecione seu Rating" },
@@ -52,17 +50,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     { value: "30000", label: "30.000+ (Amarelo/Ouro)" },
   ];
 
-  const roleOptions = [
-    { value: "", label: "Selecione sua função" },
-    { value: "Rifler", label: "Rifler" },
-    { value: "AWPer", label: "AWPer" },
-    { value: "Entry Fragger", label: "Entry Fragger" },
-    { value: "Support", label: "Support" },
-    { value: "Lurker", label: "Lurker" },
-    { value: "Flex", label: "Flex (Versátil)" },
-    { value: "IGL", label: "IGL (Líder em jogo)" },
-    { value: "Anchor", label: "Anchor (Âncora CT)" },
-  ];
+
 
   const filteredSearchPlayers = interestedPlayers.filter(p => 
     p.player_name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -81,7 +69,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         player_name: '',
         premier_points: '',
         steam_id: '',
-        role: '',
         player_password: '',
       });
       setLoginPassword('');
@@ -89,7 +76,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       setSearchQuery('');
       setIsDropdownOpen(false);
       setIsPointsDropdownOpen(false);
-      setIsRoleDropdownOpen(false);
     } else {
       setIsVisible(false);
       setTimeout(() => setShouldRender(false), 300);
@@ -166,7 +152,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             player_name: p.player_name || '',
             premier_points: p.premier_points?.toString() || '',
             steam_id: p.steam_id || '',
-            role: p.role || '',
             player_password: loginPassword,
           });
           setMode('edit');
@@ -415,7 +400,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                           <div
                             tabIndex={0}
                             onBlur={() => setTimeout(() => setIsPointsDropdownOpen(false), 200)}
-                            onClick={() => { setIsPointsDropdownOpen(!isPointsDropdownOpen); setIsRoleDropdownOpen(false); }}
+                            onClick={() => { setIsPointsDropdownOpen(!isPointsDropdownOpen); }}
                             className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer flex items-center h-[46px]"
                           >
                             <span className={playerForm.premier_points ? "text-white" : "text-slate-400"}>
@@ -456,41 +441,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
-                          Função Principal (Opcional)
-                        </label>
-                        <div className="relative">
-                          <div
-                            tabIndex={0}
-                            onBlur={() => setTimeout(() => setIsRoleDropdownOpen(false), 200)}
-                            onClick={() => { setIsRoleDropdownOpen(!isRoleDropdownOpen); setIsPointsDropdownOpen(false); }}
-                            className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer flex items-center h-[46px]"
-                          >
-                            <span className={playerForm.role ? "text-white" : "text-slate-400"}>
-                              {roleOptions.find(o => o.value === playerForm.role)?.label || "Selecione sua função"}
-                            </span>
-                            <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 pointer-events-none" />
-                          </div>
-
-                          {isRoleDropdownOpen && (
-                            <div className="absolute z-[60] w-full mt-1 bg-[#0b0e14] border border-slate-700/60 rounded-lg shadow-xl max-h-48 overflow-y-auto custom-scrollbar">
-                              {roleOptions.map(o => (
-                                <div
-                                  key={o.value}
-                                  className="px-4 py-2.5 hover:bg-amber-500/10 cursor-pointer text-white font-rajdhani text-sm border-b border-slate-800 last:border-0"
-                                  onClick={() => {
-                                    setPlayerForm({ ...playerForm, role: o.value });
-                                    setIsRoleDropdownOpen(false);
-                                  }}
-                                >
-                                  {o.label}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
 
                       {mode === 'register' && (
                         <div className="sm:col-span-2">

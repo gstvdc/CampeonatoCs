@@ -41,7 +41,6 @@ export const POST = withApiAuth(async (request: Request, ip: string) => {
   }
 
   const newPlayer: Omit<InterestedPlayer, 'id' | 'created_at'> = {
-    captain_name: 'Draft',
     player_name,
     premier_points: Number(premier_points),
     steam_id,

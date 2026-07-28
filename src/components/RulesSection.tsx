@@ -9,11 +9,11 @@ export const RulesSection: React.FC = () => {
   const faqs = [
     {
       q: 'Como funciona a inscrição para o Draft?',
-      a: 'Cada jogador individual deve se inscrever clicando em "TENHO INTERESSE NO DRAFT" e preenchendo seus dados (Nick, Pontos no Premier, Link da Steam e Função). O sorteio e a escolha das equipes serão feitos ao vivo pelos capitães.',
+      a: 'Cada jogador individual deve se inscrever clicando em "TENHO INTERESSE NO DRAFT" e preenchendo seus dados (Nick, Link da Steam e Função). A escolha das equipes será feita ao vivo pelos capitães no formato Snake Draft (1-2-2-1).',
     },
     {
       q: 'Qual é o formato das partidas e Map Pool oficial?',
-      a: 'As partidas da fase eliminatória serão em formato MD3 (Melhor de 3), e a Grande Final será uma série MD5 (Melhor de 5). O Map Pool ativo utiliza a rotação oficial competitiva do CS2: Ancient, Anubis, Cache, Dust II, Inferno, Mirage e Nuke, com sistema de veto.',
+      a: 'As partidas do chaveamento (Double Elimination com 4 times) serão em formato MD1 (Melhor de 1), e a Grande Final será uma série MD3 (Melhor de 3). O Map Pool ativo utiliza a rotação oficial do CS2, com sistema de veto em tempo real.',
     },
     {
       q: 'Regras de Anti-Cheat e Servidores',
