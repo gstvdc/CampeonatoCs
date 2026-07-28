@@ -11,6 +11,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'ID e Senha são obrigatórios para edição.' }, { status: 400 });
     }
 
+    if (Number(premier_points) < 1000) {
+      return NextResponse.json({ success: false, error: 'O mínimo de pontos no Premier é de 1000.' }, { status: 400 });
+    }
+
     if (!supabase) {
       return NextResponse.json({ success: false, error: 'Supabase não configurado.' }, { status: 500 });
     }

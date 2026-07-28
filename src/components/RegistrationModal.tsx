@@ -77,6 +77,12 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       return;
     }
 
+    if (Number(playerForm.premier_points) < 1000) {
+      setErrorMsg('O mínimo de pontos no Premier é de 1000.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -150,6 +156,12 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     e.preventDefault();
     setLoading(true);
     setErrorMsg('');
+
+    if (Number(playerForm.premier_points) < 1000) {
+      setErrorMsg('O mínimo de pontos no Premier é de 1000.');
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch('/api/edit-player', {
@@ -364,6 +376,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         <input
                           type="number"
                           required
+                          min="1000"
                           placeholder="Ex: 15000"
                           value={playerForm.premier_points}
                           onChange={(e) => setPlayerForm({ ...playerForm, premier_points: e.target.value })}

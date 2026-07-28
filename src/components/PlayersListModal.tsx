@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Users, Trophy, Trash2 } from 'lucide-react';
 import type { InterestedPlayer } from '@/lib/supabase';
+import { getPremierRatingColors } from '@/lib/colors';
 
 interface PlayersListModalProps {
   isOpen: boolean;
@@ -89,7 +90,7 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                       {player.player_name}
                     </span>
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1 bg-[#161b26] px-2 py-0.5 rounded border border-amber-500/20 text-amber-400 font-rajdhani font-bold text-xs whitespace-nowrap">
+                      <div className={`flex items-center gap-1 px-2 py-0.5 rounded border font-rajdhani font-bold text-xs whitespace-nowrap ${getPremierRatingColors(player.premier_points).bg} ${getPremierRatingColors(player.premier_points).border} ${getPremierRatingColors(player.premier_points).text}`}>
                         <Trophy className="w-3 h-3" />
                         {player.premier_points.toLocaleString('pt-BR')} PTS
                       </div>

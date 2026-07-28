@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { UserPlus, Users } from 'lucide-react';
 import { PlayersListModal } from './PlayersListModal';
 import { getCaptains, getInterestedPlayers, CaptainProfile, InterestedPlayer } from '@/lib/supabase';
+import { getPremierRatingColors } from '@/lib/colors';
 
 interface CaptainsShowcaseProps {
   onOpenInterestModal: (captainName?: string) => void;
@@ -140,7 +141,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                       <div className="w-px h-8 bg-amber-900/40"></div>
                       <div className="flex flex-col items-center">
                         <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Premier</span>
-                        <span className="text-white font-oswald text-xl sm:text-2xl font-bold">
+                        <span className={`font-oswald text-xl sm:text-2xl font-bold ${getPremierRatingColors(c.premier_points).text}`}>
                           {c.premier_points >= 1000 ? (c.premier_points / 1000).toFixed(1).replace('.0', '') + 'K' : c.premier_points}
                         </span>
                       </div>
