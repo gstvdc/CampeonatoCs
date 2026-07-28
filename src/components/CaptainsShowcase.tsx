@@ -58,7 +58,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
 
             <button
               onClick={() => onOpenInterestModal()}
-              className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3 rounded font-oswald font-bold text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 transition-all flex items-center gap-2 cursor-pointer"
             >
               <UserPlus className="w-4 h-4 fill-black" />
               <span>TENHO INTERESSE NO DRAFT</span>
@@ -149,7 +149,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                     {/* Action Button */}
                     <button
                       onClick={() => onOpenInterestModal(c.name)}
-                      className="w-full py-3 rounded-xl font-oswald font-bold text-sm uppercase tracking-wider text-black bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 group-hover:-translate-y-1 group-hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] cursor-pointer"
+                      className="w-full py-3 rounded-xl font-oswald font-bold text-sm uppercase tracking-wider text-black bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 transition-all flex items-center justify-center gap-2 group-hover:-translate-y-1 cursor-pointer"
                     >
                       <span>TENHO INTERESSE</span>
                       <span className="text-lg leading-none mb-0.5">➦</span>

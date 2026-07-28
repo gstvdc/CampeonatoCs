@@ -59,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
           {/* Confirm Interest / CTA Button */}
           <button
             onClick={onOpenRegister}
-            className="px-5 py-2.5 rounded font-oswald font-bold text-xs sm:text-sm tracking-wider uppercase text-black bg-amber-500 hover:bg-amber-400 transition-all cursor-pointer shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center gap-2"
+            className="px-5 py-2.5 rounded font-oswald font-bold text-xs sm:text-sm tracking-wider uppercase text-black bg-amber-500 hover:bg-amber-400 transition-all cursor-pointer flex items-center gap-2"
           >
             <ShieldCheck className="w-4 h-4 fill-black" />
             <span>CONFIRMAR PRESENÇA</span>
