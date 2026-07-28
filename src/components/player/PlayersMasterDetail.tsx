@@ -303,6 +303,9 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                     <ChevronLeft className="w-4 h-4 rotate-180" />
                   </button>
                 </div>
+                <Link href={`/player/${selectedPlayer.id}`} target="_blank" className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors ml-2" title="Abrir Perfil Público">
+                  <ExternalLinkIcon className="w-4 h-4" />
+                </Link>
              </div>
             <button 
               onClick={() => setSelectedPlayer(null)}
