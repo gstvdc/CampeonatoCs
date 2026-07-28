@@ -45,6 +45,22 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
     return matchesSearch && !isCaptain;
   });
 
+  const handlePrevPlayer = () => {
+    if (!selectedPlayer) return;
+    const currentIndex = filteredAndSearchedPlayers.findIndex(p => p.id === selectedPlayer.id);
+    if (currentIndex > 0) {
+      setSelectedPlayer(filteredAndSearchedPlayers[currentIndex - 1]);
+    }
+  };
+
+  const handleNextPlayer = () => {
+    if (!selectedPlayer) return;
+    const currentIndex = filteredAndSearchedPlayers.findIndex(p => p.id === selectedPlayer.id);
+    if (currentIndex !== -1 && currentIndex < filteredAndSearchedPlayers.length - 1) {
+      setSelectedPlayer(filteredAndSearchedPlayers[currentIndex + 1]);
+    }
+  };
+
   const renderRole = (role: string) => {
     if (!role) return null;
     const r = role.toLowerCase();
@@ -287,12 +303,21 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-1">
-                  <button className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors"><ChevronLeft className="w-4 h-4" /></button>
-                  <button className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors"><ChevronLeft className="w-4 h-4 rotate-180" /></button>
+                  <button 
+                    onClick={handlePrevPlayer}
+                    disabled={filteredAndSearchedPlayers.findIndex(p => p.id === selectedPlayer.id) === 0}
+                    className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={handleNextPlayer}
+                    disabled={filteredAndSearchedPlayers.findIndex(p => p.id === selectedPlayer.id) === filteredAndSearchedPlayers.length - 1}
+                    className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+                  >
+                    <ChevronLeft className="w-4 h-4 rotate-180" />
+                  </button>
                 </div>
-                <button className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors ml-2">
-                  <ExternalLinkIcon className="w-4 h-4" />
-                </button>
              </div>
             <button 
               onClick={() => setSelectedPlayer(null)}
@@ -314,15 +339,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                   {selectedPlayer.player_name}
                 </h2>
                 <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
-                  23 <span className="text-slate-600 mx-1">•</span> {selectedPlayer.role || 'Player'} <span className="text-slate-600 mx-1">•</span> Copa Lucas Moura
-                </div>
-                <div className="flex gap-2 mt-3">
-                   <button className="text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded border border-white/10 bg-white/5 hover:bg-white/10 text-white transition-colors flex items-center gap-1.5">
-                     <Target className="w-3 h-3" /> Pin player
-                   </button>
-                   <button className="text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded border border-white/10 bg-[#121214] hover:bg-white/5 text-slate-300 transition-colors flex items-center gap-1.5">
-                     <Users className="w-3 h-3" /> Add to list
-                   </button>
+                  {selectedPlayer.role || 'Player'} <span className="text-slate-600 mx-1">•</span> Copa Lucas Moura
                 </div>
               </div>
             </div>
