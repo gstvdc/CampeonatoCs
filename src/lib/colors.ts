@@ -7,3 +7,13 @@ export function getPremierRatingColors(points: number): { text: string, bg: stri
   if (points < 30000) return { text: 'text-red-500', bg: 'bg-red-600/10', border: 'border-red-600/30' }; // Red
   return { text: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/30' }; // Gold/Yellow
 }
+
+export function getCS2ColorHex(points: number): string {
+  if (points < 5000) return '#b0b5c1'; // Grey
+  if (points < 10000) return '#6faae6'; // Light Blue
+  if (points < 15000) return '#4a6ee3'; // Blue
+  if (points < 20000) return '#8f46e3'; // Purple
+  if (points < 25000) return '#e318e3'; // Pink
+  if (points < 30000) return '#e32626'; // Red
+  return '#e8b600'; // Gold
+}

@@ -373,15 +373,21 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
                           Pontos no Premier (CS2) *
                         </label>
-                        <input
-                          type="number"
+                        <select
                           required
-                          min="1000"
-                          placeholder="Ex: 15000"
                           value={playerForm.premier_points}
                           onChange={(e) => setPlayerForm({ ...playerForm, premier_points: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
-                        />
+                          className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
+                        >
+                          <option value="">-- Selecione seu Rating --</option>
+                          <option value="1000">1.000 a 4.999 (Cinza)</option>
+                          <option value="5000">5.000 a 9.999 (Azul Claro)</option>
+                          <option value="10000">10.000 a 14.999 (Azul)</option>
+                          <option value="15000">15.000 a 19.999 (Roxo)</option>
+                          <option value="20000">20.000 a 24.999 (Rosa/Fúcsia)</option>
+                          <option value="25000">25.000 a 29.999 (Vermelho)</option>
+                          <option value="30000">30.000+ (Amarelo/Ouro)</option>
+                        </select>
                       </div>
 
                       <div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { X, Users, Trophy, Trash2 } from 'lucide-react';
+import { X, Users, Trash2 } from 'lucide-react';
 import type { InterestedPlayer } from '@/lib/supabase';
-import { getPremierRatingColors } from '@/lib/colors';
+import { CS2Badge } from './CS2Badge';
 
 interface PlayersListModalProps {
   isOpen: boolean;
@@ -90,10 +90,7 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                       {player.player_name}
                     </span>
                     <div className="flex items-center gap-2">
-                      <div className={`flex items-center gap-1 px-2 py-0.5 rounded border font-rajdhani font-bold text-xs whitespace-nowrap ${getPremierRatingColors(player.premier_points).bg} ${getPremierRatingColors(player.premier_points).border} ${getPremierRatingColors(player.premier_points).text}`}>
-                        <Trophy className="w-3 h-3" />
-                        {player.premier_points.toLocaleString('pt-BR')} PTS
-                      </div>
+                      <CS2Badge points={player.premier_points} />
                       <button
                         onClick={() => handleDelete(player.id, player.player_name)}
                         className="p-1 rounded bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors cursor-pointer"
