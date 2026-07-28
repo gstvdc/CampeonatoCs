@@ -334,11 +334,11 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                           onChange={(e) => setPlayerForm({ ...playerForm, captain_name: e.target.value })}
                           className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
                         >
+                          <option value="Qualquer">Qualquer Capitão (Sem preferência)</option>
                           <option value="Gusta">Capitão Gusta (Time Gusta)</option>
                           <option value="HPS">Capitão HPS (Time HPS)</option>
                           <option value="Léo">Capitão Léo (Time Léo)</option>
                           <option value="Zane">Capitão Zane (Time Zane)</option>
-                          <option value="Qualquer">Qualquer Capitão (Sem preferência)</option>
                         </select>
                       </div>
 
