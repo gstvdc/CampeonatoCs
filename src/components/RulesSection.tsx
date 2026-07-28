@@ -13,7 +13,7 @@ export const RulesSection: React.FC = () => {
     },
     {
       q: 'Qual é o formato das partidas e Map Pool oficial?',
-      a: 'As partidas da fase eliminatória serão em formato MD3 (Melhor de 3), e a Grande Final será uma série MD5 (Melhor de 5). O Map Pool ativo utiliza a rotação oficial competitiva do CS2 com sistema de veto.',
+      a: 'As partidas da fase eliminatória serão em formato MD3 (Melhor de 3), e a Grande Final será uma série MD5 (Melhor de 5). O Map Pool ativo utiliza a rotação oficial competitiva do CS2: Ancient, Anubis, Cache, Dust II, Inferno, Mirage e Nuke, com sistema de veto.',
     },
     {
       q: 'Regras de Anti-Cheat e Servidores',
