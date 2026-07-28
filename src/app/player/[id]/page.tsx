@@ -86,9 +86,13 @@ export default async function PlayerProfilePage({ params }: { params: Promise<{ 
             
             {/* We use a stylized frame since we don't have exact transparent cutouts yet */}
             <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full border-4 border-white/10 overflow-hidden relative shadow-[0_0_50px_rgba(139,92,246,0.3)] bg-slate-900 flex items-center justify-center">
-               <div className="text-8xl font-oswald text-white/20">
-                 {player.player_name.charAt(0).toUpperCase()}
-               </div>
+               {player.avatar_url ? (
+                 <img src={player.avatar_url} alt={player.player_name} className="w-full h-full object-cover" />
+               ) : (
+                 <div className="text-8xl font-oswald text-white/20">
+                   {player.player_name.charAt(0).toUpperCase()}
+                 </div>
+               )}
             </div>
 
             <div className="relative z-20 mt-6 text-center">
