@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { UserPlus, X, CheckCircle2, AlertCircle, LogIn, Pencil, ChevronDown } from 'lucide-react';
+import { UserPlus, X, CheckCircle2, LogIn, Pencil, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import toast from 'react-hot-toast';
 import type { InterestedPlayer } from '@/types';
 
 interface RegistrationModalProps {
@@ -20,7 +21,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 }) => {
   const [mode, setMode] = useState<ModalMode>('register');
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -30,7 +30,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     player_name: '',
     premier_points: '',
     steam_id: '',
-    role: 'Rifler',
+    role: '',
     player_password: '',
   });
 
@@ -42,7 +42,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
 
   const pointsOptions = [
-    { value: "", label: "-- Selecione seu Rating --" },
+    { value: "", label: "Selecione seu Rating" },
     { value: "1000", label: "1.000 a 4.999 (Cinza)" },
     { value: "5000", label: "5.000 a 9.999 (Azul Claro)" },
     { value: "10000", label: "10.000 a 14.999 (Azul)" },
@@ -53,6 +53,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   ];
 
   const roleOptions = [
+    { value: "", label: "Selecione sua função" },
     { value: "Rifler", label: "Rifler" },
     { value: "AWPer", label: "AWPer" },
     { value: "Entry Fragger", label: "Entry Fragger" },
@@ -75,13 +76,12 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setMode('register');
       setSubmittedSuccess(false);
-      setErrorMsg('');
       setPlayerForm({
         id: '',
         player_name: '',
         premier_points: '',
         steam_id: '',
-        role: 'Rifler',
+        role: '',
         player_password: '',
       });
       setLoginPassword('');
@@ -101,16 +101,15 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg('');
 
     if (!playerForm.player_name || !playerForm.premier_points || !playerForm.player_password) {
-      setErrorMsg('Por favor, preencha todos os campos obrigatórios.');
+      toast.error('Por favor, preencha todos os campos obrigatórios.');
       setLoading(false);
       return;
     }
 
     if (Number(playerForm.premier_points) < 1000) {
-      setErrorMsg('O mínimo de pontos no Premier é de 1000.');
+      toast.error('O mínimo de pontos no Premier é de 1000.');
       setLoading(false);
       return;
     }
@@ -127,14 +126,15 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       if (response.ok && res.success) {
         setSubmittedSuccess(true);
         triggerConfetti();
+        toast.success('Interesse cadastrado com sucesso!');
         setTimeout(() => {
           onSuccess();
         }, 1500);
       } else {
-        setErrorMsg(res.error || 'Falha ao registrar interesse. Tente novamente.');
+        toast.error(res.error || 'Falha ao registrar interesse. Tente novamente.');
       }
     } catch {
-      setErrorMsg('Erro inesperado.');
+      toast.error('Erro inesperado.');
     } finally {
       setLoading(false);
     }
@@ -143,12 +143,11 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedPlayerId || !loginPassword) {
-      setErrorMsg('Selecione seu nome e digite a senha.');
+      toast.error('Selecione seu nome e digite a senha.');
       return;
     }
 
     setLoading(true);
-    setErrorMsg('');
 
     try {
       const response = await fetch('/api/verify-password', {
@@ -167,16 +166,16 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             player_name: p.player_name || '',
             premier_points: p.premier_points?.toString() || '',
             steam_id: p.steam_id || '',
-            role: p.role || 'Rifler',
+            role: p.role || '',
             player_password: loginPassword,
           });
           setMode('edit');
         }
       } else {
-        setErrorMsg(res.error || 'Senha incorreta.');
+        toast.error(res.error || 'Senha incorreta.');
       }
     } catch {
-      setErrorMsg('Erro inesperado.');
+      toast.error('Erro inesperado.');
     } finally {
       setLoading(false);
     }
@@ -185,10 +184,9 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg('');
 
     if (Number(playerForm.premier_points) < 1000) {
-      setErrorMsg('O mínimo de pontos no Premier é de 1000.');
+      toast.error('O mínimo de pontos no Premier é de 1000.');
       setLoading(false);
       return;
     }
@@ -204,14 +202,15 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
       if (response.ok && res.success) {
         setSubmittedSuccess(true);
+        toast.success('Dados atualizados com sucesso!');
         setTimeout(() => {
           onSuccess();
         }, 1500);
       } else {
-        setErrorMsg(res.error || 'Erro ao atualizar dados.');
+        toast.error(res.error || 'Erro ao atualizar dados.');
       }
     } catch {
-      setErrorMsg('Erro inesperado.');
+      toast.error('Erro inesperado.');
     } finally {
       setLoading(false);
     }
@@ -230,7 +229,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
   return (
     <div className={`fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ease-out ${isVisible ? 'bg-black/90 opacity-100' : 'bg-black/0 opacity-0 pointer-events-none'}`}>
-      <div className={`relative w-full max-w-2xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8 transition-all duration-300 ease-out transform ${isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}>
+      <div className={`relative w-full max-w-2xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-2xl my-8 transition-all duration-300 ease-out transform ${isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}>
         
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
@@ -254,7 +253,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         {!submittedSuccess && mode !== 'edit' && (
           <div className="flex border-b border-slate-800/80">
             <button
-              onClick={() => { setMode('register'); setErrorMsg(''); }}
+              onClick={() => { setMode('register'); }}
               className={`flex-1 py-3 text-sm font-oswald font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 mode === 'register' ? 'text-amber-400 border-b-2 border-amber-400 bg-amber-500/5' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
               }`}
@@ -262,7 +261,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
               NOVO CADASTRO
             </button>
             <button
-              onClick={() => { setMode('login'); setErrorMsg(''); }}
+              onClick={() => { setMode('login'); }}
               className={`flex-1 py-3 text-sm font-oswald font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 mode === 'login' ? 'text-amber-400 border-b-2 border-amber-400 bg-amber-500/5' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
               }`}
@@ -289,13 +288,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
             </div>
           ) : (
             <>
-              {errorMsg && (
-                <div className="flex items-center gap-2 p-3 rounded bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs font-rajdhani font-bold">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>{errorMsg}</span>
-                </div>
-              )}
-
               {mode === 'login' && (
                 <form onSubmit={handleLoginSubmit} className="space-y-5">
                   <div className="space-y-4">
@@ -360,7 +352,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       </label>
                       <input
                         type="password"
-                        required
                         placeholder="Digite a senha que você criou"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
@@ -403,7 +394,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         </label>
                         <input
                           type="text"
-                          required
                           placeholder="Ex: FalleN"
                           value={playerForm.player_name}
                           onChange={(e) => setPlayerForm({ ...playerForm, player_name: e.target.value })}
@@ -423,7 +413,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                             className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer flex items-center h-[46px]"
                           >
                             <span className={playerForm.premier_points ? "text-white" : "text-slate-400"}>
-                              {playerForm.premier_points ? pointsOptions.find(o => o.value === playerForm.premier_points)?.label : "-- Selecione seu Rating --"}
+                              {playerForm.premier_points ? pointsOptions.find(o => o.value === playerForm.premier_points)?.label : "Selecione seu Rating"}
                             </span>
                             <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 pointer-events-none" />
                           </div>
@@ -471,8 +461,8 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                             onClick={() => { setIsRoleDropdownOpen(!isRoleDropdownOpen); setIsPointsDropdownOpen(false); }}
                             className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer flex items-center h-[46px]"
                           >
-                            <span>
-                              {roleOptions.find(o => o.value === playerForm.role)?.label || "Rifler"}
+                            <span className={playerForm.role ? "text-white" : "text-slate-400"}>
+                              {roleOptions.find(o => o.value === playerForm.role)?.label || "Selecione sua função"}
                             </span>
                             <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 pointer-events-none" />
                           </div>
@@ -503,7 +493,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                           </label>
                           <input
                             type="password"
-                            required
                             placeholder="Crie uma senha"
                             value={playerForm.player_password}
                             onChange={(e) => setPlayerForm({ ...playerForm, player_password: e.target.value })}

@@ -1,5 +1,18 @@
 import type { Metadata } from 'next';
+import { Rajdhani, Oswald } from "next/font/google";
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
+
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-rajdhani",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+});
 
 export const metadata: Metadata = {
   title: 'Copa Lucas Moura 2ª Edição | Campeonato CS2 2026',
@@ -28,8 +41,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="scroll-smooth">
-      <body className="antialiased bg-[#06080e] text-slate-100 min-h-screen selection:bg-[#00f0ff] selection:text-black">
+      <body className={`${rajdhani.variable} ${oswald.variable} antialiased bg-[#050401] text-white selection:bg-amber-500/30 selection:text-amber-200`}>
         {children}
+        <Toaster 
+          position="bottom-center"
+          toastOptions={{
+            style: {
+              background: '#111622',
+              color: '#fff',
+              border: '1px solid rgba(245, 158, 11, 0.2)',
+              fontFamily: 'var(--font-rajdhani)',
+            },
+          }}
+        />
       </body>
     </html>
   );
