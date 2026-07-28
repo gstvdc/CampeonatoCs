@@ -397,7 +397,10 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                           <option value="AWPer">AWPer</option>
                           <option value="Entry Fragger">Entry Fragger</option>
                           <option value="Support">Support</option>
+                          <option value="Lurker">Lurker</option>
+                          <option value="Flex">Flex (Versátil)</option>
                           <option value="IGL">IGL (Líder em jogo)</option>
+                          <option value="Anchor">Anchor (Âncora CT)</option>
                         </select>
                       </div>
 
