@@ -128,7 +128,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
       </aside>
 
       {/* Middle: Master List */}
-      <div className={`flex-1 flex flex-col h-full bg-[#18181b] transition-all duration-300 ${selectedPlayer ? 'hidden lg:flex lg:max-w-[65%]' : 'flex'}`}>
+      <div className={`flex-1 flex flex-col h-full bg-[#18181b] transition-all duration-300 ${selectedPlayer ? 'hidden lg:flex' : 'flex'}`}>
         
         {/* Search & Header */}
         <div className="p-6 pb-2">
