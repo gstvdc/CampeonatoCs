@@ -11,7 +11,6 @@ interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
   return (
     <section id="inicio" className="relative min-h-screen pt-36 sm:pt-40 pb-20 flex flex-col justify-between overflow-hidden bg-[#0b0e14]">
-      {/* Official CS2 Wallpaper Background */}
       <div className="absolute inset-0 z-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -22,13 +21,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b0e14] via-[#0b0e14]/60 to-transparent" />
       </div>
 
-      {/* Hero Ultra-Wide Content Grid */}
       <div className="relative z-10 max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto">
         
-        {/* Left Column: Aggressive, Clean & Determined Typography */}
         <div className="lg:col-span-7 space-y-8 text-left">
           
-          {/* Main Headline */}
           <div className="space-y-4">
             <h1 className="font-oswald font-black text-5xl sm:text-7xl xl:text-8xl tracking-tight text-amber-400 leading-none uppercase drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)]">
               SEM MARGEM PARA ERROS.
@@ -38,12 +34,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             </h2>
           </div>
 
-          {/* Subtext Description: Flexible for any number of captains */}
           <p className="text-slate-200 font-rajdhani font-bold text-lg sm:text-2xl max-w-2xl leading-relaxed drop-shadow-md">
             Os melhores capitães. 2 dias épicos. Inscreva-se no Draft (07/08) e dispute o torneio (08/08).
           </p>
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={onOpenRegister}
@@ -64,12 +58,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
           </div>
         </div>
 
-        {/* Right Column: 3D Pop-out Frame & Aligned Countdown Timer DIRECTLY Below Image */}
         <div className="lg:col-span-5 relative flex flex-col items-center lg:items-end space-y-6 mt-6 sm:mt-10 lg:mt-12">
           
-          {/* 3D Pop-out Card Container */}
           <div className="relative group max-w-lg xl:max-w-xl w-full">
-            {/* Main Frame */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl transition-all">
               <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#0b0e14]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -82,7 +73,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
               </div>
             </div>
 
-            {/* 3D Pop-out Trophy Image */}
             <div className="absolute -top-10 -right-6 sm:-top-14 sm:-right-8 xl:-top-16 xl:-right-10 w-56 sm:w-72 xl:w-80 pointer-events-none z-20 transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -93,7 +83,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             </div>
           </div>
 
-          {/* Countdown Timer: Positioned Directly Under the Image Frame */}
           <div className="max-w-lg xl:max-w-xl w-full">
             <CountdownTimer targetDate="2026-08-08T13:00:00" />
           </div>

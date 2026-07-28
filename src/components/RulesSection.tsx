@@ -33,12 +33,7 @@ export const RulesSection: React.FC = () => {
     <section id="regras" className="py-20 bg-[#0b0e14] relative border-t border-slate-800">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Title */}
         <div className="text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#111726] border border-slate-800 text-xs font-rajdhani font-bold text-blue-400 uppercase tracking-widest">
-            <HelpCircle className="w-4 h-4" />
-            <span>REGULAMENTO & PERGUNTAS FREQUENTES</span>
-          </div>
           <h2 className="font-oswald font-bold text-3xl sm:text-5xl text-white tracking-tight uppercase">
             REGRAS <span className="text-blue-400">OFICIAIS</span>
           </h2>
@@ -47,7 +42,6 @@ export const RulesSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Accordion List */}
         <div className="space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;

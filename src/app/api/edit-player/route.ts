@@ -34,7 +34,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Campos excederam o tamanho máximo permitido.' }, { status: 400 });
     }
 
-    // Buscar a senha atual do jogador no banco
     const { data: player, error: fetchError } = await supabase
       .from('interested_players')
       .select('player_password')
@@ -53,7 +52,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Senha pessoal incorreta.' }, { status: 403 });
     }
 
-    // Se a senha bateu, atualizar os dados
     const updates = {
       captain_name: 'Draft',
       player_name,

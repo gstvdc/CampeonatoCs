@@ -24,33 +24,25 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#0b0e14] text-slate-100 flex flex-col selection:bg-amber-500 selection:text-black">
-      {/* Navbar Header */}
       <Navbar
         onOpenRegister={openPlayerInterestModal}
       />
 
-      {/* Hero Section */}
       <HeroSection onOpenRegister={() => openPlayerInterestModal()} />
 
-      {/* Twitch Live Banner */}
       <LiveBanner />
 
-      {/* Captains Showcase with Draft Registration */}
       <CaptainsShowcase
         onOpenInterestModal={openPlayerInterestModal}
         refreshTrigger={refreshTrigger}
       />
 
-      {/* Schedule Timeline (Single Day Saturday 08/08) */}
       <ScheduleSection />
 
-      {/* Rules FAQ Accordion */}
       <RulesSection />
 
-      {/* Footer */}
       <Footer />
 
-      {/* Registration Modal */}
       <RegistrationModal
         isOpen={registerModalOpen}
         onClose={() => setRegisterModalOpen(false)}

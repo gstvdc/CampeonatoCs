@@ -39,14 +39,11 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
 
   return (
     <div className="w-full text-center space-y-3 pt-2">
-      {/* Title matching user reference text */}
       <h4 className="text-amber-400 font-rajdhani font-semibold text-base sm:text-lg tracking-wide">
         O torneio começa em
       </h4>
 
-      {/* 4 Ultra-subtle, almost invisible glass squares with orange text */}
       <div className="grid grid-cols-4 gap-2.5 sm:gap-3.5 text-center">
-        {/* Days */}
         <div className="bg-white/[0.06] backdrop-blur-md p-3.5 sm:p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center transition-all hover:bg-white/[0.09]">
           <div className="font-oswald font-bold text-3xl sm:text-4xl xl:text-5xl text-amber-400 tracking-tight leading-none">
             {timeLeft.days}
@@ -56,7 +53,6 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
           </div>
         </div>
 
-        {/* Hours */}
         <div className="bg-white/[0.06] backdrop-blur-md p-3.5 sm:p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center transition-all hover:bg-white/[0.09]">
           <div className="font-oswald font-bold text-3xl sm:text-4xl xl:text-5xl text-amber-400 tracking-tight leading-none">
             {timeLeft.hours}
@@ -66,7 +62,6 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
           </div>
         </div>
 
-        {/* Minutes */}
         <div className="bg-white/[0.06] backdrop-blur-md p-3.5 sm:p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center transition-all hover:bg-white/[0.09]">
           <div className="font-oswald font-bold text-3xl sm:text-4xl xl:text-5xl text-amber-400 tracking-tight leading-none">
             {timeLeft.minutes}
@@ -76,7 +71,6 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
           </div>
         </div>
 
-        {/* Seconds */}
         <div className="bg-white/[0.06] backdrop-blur-md p-3.5 sm:p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center transition-all hover:bg-white/[0.09]">
           <div className="font-oswald font-bold text-3xl sm:text-4xl xl:text-5xl text-amber-400 tracking-tight leading-none">
             {timeLeft.seconds}

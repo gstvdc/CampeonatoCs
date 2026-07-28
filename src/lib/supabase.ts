@@ -39,7 +39,6 @@ export const supabase = isSupabaseConfigured()
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
-// 4 Official Captains (Fixed)
 export const FIXED_CAPTAINS: CaptainProfile[] = [
   {
     id: 'cap-gusta',
@@ -79,12 +78,10 @@ export const FIXED_CAPTAINS: CaptainProfile[] = [
   },
 ];
 
-// Helper: Fetch Captains (Now fixed)
 export async function getCaptains(): Promise<CaptainProfile[]> {
   return FIXED_CAPTAINS;
 }
 
-// Helper: Fetch Interested Players
 export async function getInterestedPlayers(): Promise<InterestedPlayer[]> {
   if (isSupabaseConfigured() && supabase) {
     try {
@@ -97,7 +94,6 @@ export async function getInterestedPlayers(): Promise<InterestedPlayer[]> {
   return [];
 }
 
-// Helper: Register Interested Player
 export async function registerInterestedPlayer(
   player: Omit<InterestedPlayer, 'id' | 'created_at'>
 ): Promise<{ success: boolean; data?: InterestedPlayer; error?: string }> {

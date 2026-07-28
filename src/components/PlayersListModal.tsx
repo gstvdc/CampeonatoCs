@@ -37,7 +37,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Filtrar capitães da lista de inscritos, caso tenham se registrado
   const captainNames = ['gusta', 'hps', 'léo', 'leo', 'zane'];
   const filteredPlayers = players.filter(
     (p) => !captainNames.some((c) => p.player_name.toLowerCase().includes(c))
@@ -57,7 +56,7 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
 
       if (data.success) {
         alert('Jogador removido com sucesso!');
-        window.location.reload(); // Recarrega a página para atualizar a lista
+        window.location.reload(); 
       } else {
         alert(`Erro: ${data.error}`);
       }
@@ -70,7 +69,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
       <div className="relative w-full max-w-3xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8">
         
-        {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
             <div>
@@ -90,7 +88,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
           </button>
         </div>
 
-        {/* Content Body */}
         <div className="p-6 max-h-[60vh] overflow-y-auto">
           {filteredPlayers.length === 0 ? (
             <div className="text-center py-10">
@@ -106,7 +103,6 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                   key={player.id} 
                   className="group relative bg-gradient-to-br from-[#12161f] to-[#0a0c11] border border-slate-700/40 p-4 rounded-xl flex flex-col gap-1 hover:border-slate-500/60 hover:shadow-xl hover:shadow-black/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
-                  {/* Subtle top glow line */}
                   <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-500/30 group-hover:via-amber-500/40 to-transparent transition-colors"></div>
 
                   <div className="flex justify-between items-start relative z-10">

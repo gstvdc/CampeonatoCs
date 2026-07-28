@@ -20,14 +20,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Banco de dados não configurado no servidor.' }, { status: 500 });
     }
 
-    // Rate Limiting
     const ip = getClientIp(request);
     const rateLimit = checkRateLimit(ip);
     if (!rateLimit.success) {
       return NextResponse.json({ success: false, error: rateLimit.error }, { status: 429 });
     }
 
-    // Input Sanitization (Tamanho máximo)
     if (
       player_name.length > 50 ||
       (steam_id && steam_id.length > 100) ||
@@ -37,7 +35,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Campos excederam o tamanho máximo permitido.' }, { status: 400 });
     }
 
-    // If it's not a local / unknown IP, check for existing registration
     if (ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1' && ip !== 'localhost') {
       const { data: existingPlayers, error: fetchError } = await supabase
         .from('interested_players')
@@ -54,7 +51,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // Prepare data
     const newPlayer: Omit<InterestedPlayer, 'id' | 'created_at'> = {
       captain_name: 'Draft',
       player_name,
@@ -65,7 +61,6 @@ export async function POST(request: Request) {
       player_password
     };
 
-    // Insert into DB
     const { data, error } = await supabase
       .from('interested_players')
       .insert([newPlayer])

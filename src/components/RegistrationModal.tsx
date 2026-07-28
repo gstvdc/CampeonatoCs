@@ -22,9 +22,8 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [players, setPlayers] = useState<InterestedPlayer[]>([]);
 
-  // Player Form State (used for both register and edit)
   const [playerForm, setPlayerForm] = useState({
-    id: '', // Used for edit
+    id: '', 
     player_name: '',
     premier_points: '',
     steam_id: '',
@@ -32,7 +31,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     player_password: '',
   });
 
-  // Login State
   const [selectedPlayerId, setSelectedPlayerId] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,7 +40,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
     p.player_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Fetch players when modal opens
   useEffect(() => {
     if (isOpen) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -134,7 +131,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       const res = await response.json();
 
       if (response.ok && res.success) {
-        // Find player and populate form
         const p = players.find(p => p.id === selectedPlayerId);
         if (p) {
           setPlayerForm({
@@ -200,14 +196,13 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         origin: { y: 0.6 },
         colors: ['#f59e0b', '#eab308', '#f97316'],
       });
-    } catch { /* ignore */ }
+    } catch {  }
   };
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
       <div className="relative w-full max-w-2xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8">
         
-        {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
             <div>
@@ -227,7 +222,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
           </button>
         </div>
 
-        {/* Mode Tabs */}
         {!submittedSuccess && mode !== 'edit' && (
           <div className="flex border-b border-slate-800/80">
             <button
@@ -249,7 +243,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
           </div>
         )}
 
-        {/* Content Body */}
         <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
           {submittedSuccess ? (
             <div className="py-12 text-center space-y-4">

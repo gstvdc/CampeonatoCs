@@ -1,17 +1,29 @@
 'use client';
 
 import React from 'react';
-import { Tv } from 'lucide-react';
+
+const TwitchIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"/>
+  </svg>
+);
 
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#040508] border-t border-slate-800/80 pt-16 pb-12 text-slate-400 font-rajdhani">
       <div className="max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 space-y-12">
         
-        {/* Top Footer Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           
-          {/* Brand Col: Logo Image Only with Seamless Background Blend */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -24,17 +36,9 @@ export const Footer: React.FC = () => {
             <p className="text-sm text-slate-400 max-w-md font-semibold leading-relaxed">
               O campeonato de Counter-Strike 2 reunindo os melhores capitães. Troféu exclusivo, transmissão ao vivo profissional e disputas intensas.
             </p>
-            <div className="flex items-center gap-3 text-xs font-bold text-slate-300">
-              <span className="px-2.5 py-1 rounded bg-[#0e121e] border border-slate-700 text-amber-400 uppercase">
-                COUNTER-STRIKE 2
-              </span>
-              <span className="px-2.5 py-1 rounded bg-[#0e121e] border border-slate-700 text-amber-400 uppercase">
-                2ª EDIÇÃO 2026
-              </span>
-            </div>
+
           </div>
 
-          {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="font-oswald font-bold text-sm text-white uppercase tracking-wider">
               NAVEGAÇÃO RÁPIDA
@@ -63,7 +67,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Live Channels */}
           <div className="space-y-3">
             <h4 className="font-oswald font-bold text-sm text-white uppercase tracking-wider">
               TRANSMISSÃO AO VIVO
@@ -73,9 +76,9 @@ export const Footer: React.FC = () => {
                 href="https://twitch.tv"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 p-2.5 rounded bg-[#0e121e] border border-slate-800 hover:border-purple-500 text-slate-200 hover:text-purple-400 transition-all"
+                className="inline-flex w-fit items-center gap-2.5 px-5 py-2.5 rounded-lg bg-[#9146FF] hover:bg-[#772CE8] text-white transition-all font-semibold shadow-md"
               >
-                <Tv className="w-4 h-4 text-purple-400" />
+                <TwitchIcon className="w-5 h-5" />
                 <span>Twitch Official Stream</span>
               </a>
             </div>
@@ -83,7 +86,6 @@ export const Footer: React.FC = () => {
 
         </div>
 
-        {/* Bottom Credits Line */}
         <div className="pt-8 border-t border-slate-800/60 flex items-center justify-center text-xs font-semibold text-slate-400">
           <p>© 2026 Copa Lucas Moura - Todos os direitos reservados. CS2 é marca registrada da Valve Corporation.</p>
         </div>

@@ -5,7 +5,6 @@ import React from 'react';
 export const LiveBanner = () => {
   return (
     <div className="w-full bg-[#9146FF] text-white py-3 px-6 relative overflow-hidden z-20 shadow-[0_0_20px_rgba(145,70,255,0.4)]">
-      {/* Background pattern */}
       <div className="absolute inset-0 bg-black/10 mix-blend-overlay" />
       
       <div className="max-w-[1720px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 relative z-10">

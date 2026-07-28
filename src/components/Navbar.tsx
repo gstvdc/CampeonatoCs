@@ -28,7 +28,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
     >
       <div className="max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between">
         
-        {/* Clean Logo Image Only (Background blended smoothly, side text removed) */}
         <a href="#inicio" className="flex items-center group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -38,7 +37,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
           />
         </a>
 
-        {/* Navigation Links */}
         <nav className="hidden lg:flex items-center gap-8 font-oswald font-bold text-sm tracking-wider uppercase text-slate-300">
           <a href="#inicio" className="hover:text-amber-400 transition-colors py-1 border-b-2 border-amber-400 text-white">
             INÍCIO
@@ -54,9 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
           </a>
         </nav>
 
-        {/* Right Controls */}
         <div className="flex items-center gap-3">
-          {/* Confirm Interest / CTA Button */}
           <button
             onClick={onOpenRegister}
             className="px-5 py-2.5 rounded font-oswald font-bold text-xs sm:text-sm tracking-wider uppercase text-black bg-amber-500 hover:bg-amber-400 transition-all cursor-pointer flex items-center gap-2"
