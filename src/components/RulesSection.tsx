@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 export const RulesSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
