@@ -570,8 +570,8 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
               cy={radius}
             />
           </svg>
-          <div className="absolute flex flex-col items-center justify-center">
-            <span className={`font-oswald font-black text-white ${size === 'large' ? 'text-3xl' : 'text-sm'}`}>
+          <div className="absolute flex flex-col items-center justify-center w-full px-1">
+            <span className={`font-oswald font-black text-white text-center leading-none tracking-tight ${size === 'large' ? 'text-2xl' : 'text-xs'}`}>
               {value}
             </span>
           </div>
