@@ -97,8 +97,14 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
   };
 
   return (
-    <div className={`fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ease-out ${isVisible ? 'bg-black/90 opacity-100' : 'bg-black/0 opacity-0 pointer-events-none'}`}>
-      <div className={`relative w-full max-w-3xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-2xl my-8 transition-all duration-300 ease-out transform ${isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}>
+    <div 
+      onClick={onClose}
+      className={`fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ease-out ${isVisible ? 'bg-black/80 backdrop-blur-sm opacity-100' : 'bg-black/0 backdrop-blur-none opacity-0 pointer-events-none'}`}
+    >
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full max-w-3xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-2xl my-8 transition-all duration-300 ease-out transform ${isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}
+      >
         
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
@@ -177,8 +183,14 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
       </div>
 
       {playerToDelete && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4 transition-opacity duration-200 ease-out">
-          <div className="w-full max-w-sm bg-[#111622] border border-slate-700/60 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        <div 
+          onClick={() => setPlayerToDelete(null)}
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-200 ease-out"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm bg-[#111622] border border-slate-700/60 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+          >
             <div className="px-5 py-4 border-b border-slate-800 flex justify-between items-center bg-[#0b0e14]">
               <h4 className="font-oswald font-bold text-white uppercase flex items-center gap-2">
                 <Trash2 className="w-4 h-4 text-rose-500" />
