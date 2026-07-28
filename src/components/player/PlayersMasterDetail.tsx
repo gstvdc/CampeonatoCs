@@ -14,6 +14,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
   const [liveStats, setLiveStats] = useState<any>(null);
   const [loadingStats, setLoadingStats] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'jogadores' | 'capitaes'>('jogadores');
   const [resultsPerPage, setResultsPerPage] = useState('20');
   const [isSyncing, setIsSyncing] = useState(false);
 
@@ -34,7 +35,15 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
     }
   };
 
-  const filteredAndSearchedPlayers = players.filter(p => p.player_name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredAndSearchedPlayers = players.filter(p => {
+    const matchesSearch = p.player_name.toLowerCase().includes(searchQuery.toLowerCase());
+    const isCaptain = ['GUSTA', 'HPS', 'SOUZ', 'ZANE'].includes(p.player_name.toUpperCase());
+    
+    if (activeTab === 'capitaes') {
+      return matchesSearch && isCaptain;
+    }
+    return matchesSearch && !isCaptain;
+  });
 
   const renderRole = (role: string) => {
     if (!role) return null;
@@ -156,8 +165,18 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
           
           {/* Tabs */}
           <div className="flex items-center gap-8 border-b border-white/5 text-xs font-bold uppercase tracking-wider">
-            <button className="pb-4 text-white border-b-2 border-white">Todos os Resultados</button>
-            <button className="pb-4 text-slate-500 hover:text-slate-300 transition-colors">Meus Favoritos</button>
+            <button 
+              onClick={() => setActiveTab('jogadores')}
+              className={`pb-4 transition-colors ${activeTab === 'jogadores' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
+            >
+              Jogadores
+            </button>
+            <button 
+              onClick={() => setActiveTab('capitaes')}
+              className={`pb-4 transition-colors ${activeTab === 'capitaes' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
+            >
+              Capitães
+            </button>
           </div>
         </div>
 
