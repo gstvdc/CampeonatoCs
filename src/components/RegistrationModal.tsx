@@ -40,6 +40,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   // Fetch players when modal opens
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMode('register');
       setSubmittedSuccess(false);
       setErrorMsg('');

@@ -39,8 +39,8 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
       } else {
         alert(`Erro: ${data.error}`);
       }
-    } catch (err) {
-      alert('Erro ao tentar remover o jogador.');
+    } catch {
+      alert('Erro inesperado ao remover jogador.');
     }
   };
 

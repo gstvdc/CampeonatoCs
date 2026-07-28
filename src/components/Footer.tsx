@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Heart, Tv, Video } from 'lucide-react';
+import { Tv } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
