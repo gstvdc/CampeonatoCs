@@ -18,6 +18,8 @@ Este projeto foi construído com as melhores e mais modernas tecnologias do ecos
 - **Mural de Capitães:** Exibição dos 4 capitães oficiais (Gusta, HPS, Léo, Zane) com suas pontuações e perfis.
 - **Sistema de Inscrição no Draft:** Formulário para jogadores se cadastrarem com seus Nicks, Steam ID, WhatsApp e função (Role) preferida no CS2.
 - **Integração Real-time:** As inscrições vão diretamente para o banco de dados oficial no Supabase.
+- **Painel/API Admin:** Sistema para gerenciar inscrições, permitindo exclusão de jogadores cadastrados (protegido por senha).
+- **Segurança (Rate Limit):** Proteção contra múltiplos envios (spam) baseada no IP do cliente (max 5 requisições por minuto).
 - **Design Premium:** UI temática de Counter-Strike 2, dark mode, animações e responsividade.
 
 ## Como rodar o projeto localmente
@@ -36,10 +38,11 @@ Para rodar este projeto na sua máquina, você precisará ter o [Node.js](https:
    ```
 
 3. **Configure as Variáveis de Ambiente (Supabase)**
-   Crie um arquivo chamado `.env.local` na raiz do projeto e adicione as suas chaves do Supabase:
+   Crie um arquivo chamado `.env.local` na raiz do projeto e adicione as suas chaves do Supabase e a senha de Admin:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=sua_url_do_projeto
    NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anon_public
+   ADMIN_PASSWORD=senha_segura_para_admin
    ```
 
 4. **Inicie o servidor de desenvolvimento**
