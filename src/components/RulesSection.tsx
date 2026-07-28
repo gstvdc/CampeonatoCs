@@ -8,20 +8,20 @@ export const RulesSection: React.FC = () => {
 
   const faqs = [
     {
-      q: 'Como funciona o processo de confirmação de presença?',
-      a: 'O capitão de cada time deve preencher o formulário oficial clicando no botão "CONFIRMAR PRESENÇA", registrando a line-up de 5 jogadores principais e opcionalmente 1 reserva. A confirmação é gravada em tempo real no banco de dados Supabase.',
+      q: 'Como funciona a inscrição para o Draft?',
+      a: 'Cada jogador individual deve se inscrever clicando em "TENHO INTERESSE NO DRAFT" e preenchendo seus dados (Nick, Pontos no Premier, Link da Steam, Função e Capitão de preferência). O sorteio e a escolha das equipes serão feitos ao vivo pelos capitães.',
     },
     {
       q: 'Qual é o formato das partidas e Map Pool oficial?',
-      a: 'Todas as partidas da fase eliminatória e Grande Final serão em formato MD3 (Melhor de 3). O Map Pool ativo utiliza a rotação oficial competitiva do CS2: Mirage, Inferno, Nuke, Anubis, Ancient, Dust II e Vertigo com sistema de veto de capitães.',
+      a: 'As partidas da fase eliminatória serão em formato MD3 (Melhor de 3), e a Grande Final será uma série MD5 (Melhor de 5). O Map Pool ativo utiliza a rotação oficial competitiva do CS2 com sistema de veto.',
     },
     {
       q: 'Regras de Anti-Cheat e Servidores',
-      a: 'É obrigatório o uso de conta Steam sem banimentos VAC ou Game Ban ativos nos últimos 365 dias. Todas as partidas ocorrem em servidores brasileiros dedicados com Anti-Cheat habilitado e gravação de GOTV/DEMO obrigatória.',
+      a: 'É obrigatório o uso de conta Steam sem banimentos VAC ou Game Ban ativos nos últimos 365 dias. Todas as partidas ocorrem nos servidores da FireGames com Anti-Cheat habilitado e gravação de GOTV/DEMO obrigatória.',
     },
     {
       q: 'Qual é a tolerância de atraso e suporte?',
-      a: 'O tempo limite de tolerância para check-in de cada partida na sala da lobby é de 15 minutos após o horário agendado. Os capitães têm canal direto no Discord oficial do torneio para tirar dúvidas.',
+      a: 'O tempo limite de tolerância para o comparecimento do time no servidor é de 15 minutos após o horário agendado. Os capitães têm canal direto no Discord oficial do torneio para tirar dúvidas.',
     },
   ];
 
