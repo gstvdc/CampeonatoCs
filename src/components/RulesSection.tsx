@@ -9,7 +9,7 @@ export const RulesSection: React.FC = () => {
   const faqs = [
     {
       q: 'Como funciona a inscrição para o Draft?',
-      a: 'Cada jogador individual deve se inscrever clicando em "TENHO INTERESSE NO DRAFT" e preenchendo seus dados (Nick, Pontos no Premier, Link da Steam, Função e Capitão de preferência). O sorteio e a escolha das equipes serão feitos ao vivo pelos capitães.',
+      a: 'Cada jogador individual deve se inscrever clicando em "TENHO INTERESSE NO DRAFT" e preenchendo seus dados (Nick, Pontos no Premier, Link da Steam e Função). O sorteio e a escolha das equipes serão feitos ao vivo pelos capitães.',
     },
     {
       q: 'Qual é o formato das partidas e Map Pool oficial?',

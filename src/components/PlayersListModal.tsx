@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Users, Trash2 } from 'lucide-react';
+import { X, Users, Trash2, Crosshair, Swords, Brain, Zap, ShieldPlus, EyeOff, Anchor, RefreshCw } from 'lucide-react';
 import type { InterestedPlayer } from '@/lib/supabase';
 import { CS2Badge } from './CS2Badge';
 
@@ -14,6 +14,27 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
   onClose,
   players,
 }) => {
+  const renderRole = (role: string) => {
+    const r = role.toLowerCase();
+    let Icon = Swords;
+    if (r === 'awper') Icon = Crosshair;
+    else if (r === 'igl') Icon = Brain;
+    else if (r === 'entry fragger') Icon = Zap;
+    else if (r === 'support') Icon = ShieldPlus;
+    else if (r === 'lurker') Icon = EyeOff;
+    else if (r === 'anchor') Icon = Anchor;
+    else if (r === 'flex') Icon = RefreshCw;
+
+    return (
+      <div className="flex items-center gap-1.5 opacity-70 group-hover:opacity-100 transition-opacity" title={`Função: ${role}`}>
+        <Icon className="w-3.5 h-3.5 text-amber-500" />
+        <span className="text-slate-200 font-oswald text-xs uppercase tracking-widest">
+          {role}
+        </span>
+      </div>
+    );
+  };
+
   if (!isOpen) return null;
 
   // Filtrar capitães da lista de inscritos, caso tenham se registrado
@@ -83,30 +104,43 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
               {filteredPlayers.map((player) => (
                 <div 
                   key={player.id} 
-                  className="bg-[#0b0e14] border border-slate-700/50 p-4 rounded-lg flex flex-col gap-2 hover:border-amber-500/30 transition-colors"
+                  className="group relative bg-gradient-to-br from-[#12161f] to-[#0a0c11] border border-slate-700/40 p-4 rounded-xl flex flex-col gap-1 hover:border-slate-500/60 hover:shadow-xl hover:shadow-black/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
-                  <div className="flex justify-between items-start">
-                    <span className="font-oswald font-bold text-white text-lg truncate pr-2">
-                      {player.player_name}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <CS2Badge points={player.premier_points} />
-                      <button
-                        onClick={() => handleDelete(player.id, player.player_name)}
-                        className="p-1 rounded bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors cursor-pointer"
-                        title="Remover inscrito"
+                  {/* Subtle top glow line */}
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-500/30 group-hover:via-amber-500/40 to-transparent transition-colors"></div>
+
+                  <div className="flex justify-between items-start relative z-10">
+                    {player.steam_id ? (
+                      <a
+                        href={player.steam_id.startsWith('http') ? player.steam_id : `https://steamcommunity.com/id/${player.steam_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-oswald font-bold text-white hover:text-amber-400 text-xl tracking-wide truncate pr-2 hover:underline transition-colors flex items-center gap-2"
+                        title="Ver perfil na Steam"
                       >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-end items-center text-xs font-rajdhani font-bold text-slate-400">
-                    {player.role && (
-                      <span className="uppercase bg-slate-800 px-2 py-0.5 rounded text-slate-300">
-                        {player.role}
+                        {player.player_name}
+                      </a>
+                    ) : (
+                      <span className="font-oswald font-bold text-white text-xl tracking-wide truncate pr-2 group-hover:text-amber-400 transition-colors">
+                        {player.player_name}
                       </span>
                     )}
+                    <button
+                      onClick={() => handleDelete(player.id, player.player_name)}
+                      className="p-1.5 rounded-md bg-rose-500/5 hover:bg-rose-500/20 text-rose-500/70 hover:text-rose-500 transition-colors cursor-pointer"
+                      title="Remover inscrito"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                  
+                  <div className="flex justify-between items-end mt-3 relative z-10">
+                    <div>
+                      {player.role && renderRole(player.role)}
+                    </div>
+                    <div>
+                      <CS2Badge points={player.premier_points} />
+                    </div>
                   </div>
                 </div>
               ))}

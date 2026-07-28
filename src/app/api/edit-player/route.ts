@@ -5,7 +5,7 @@ import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { id, player_password, captain_name, player_name, premier_points, steam_id, role } = body;
+    const { id, player_password, player_name, premier_points, steam_id, role } = body;
 
     if (!id || !player_password) {
       return NextResponse.json({ success: false, error: 'ID e Senha são obrigatórios para edição.' }, { status: 400 });
@@ -26,7 +26,6 @@ export async function POST(request: Request) {
     }
 
     if (
-      captain_name.length > 50 ||
       player_name.length > 50 ||
       (steam_id && steam_id.length > 100) ||
       player_password.length > 50 ||
@@ -56,7 +55,7 @@ export async function POST(request: Request) {
 
     // Se a senha bateu, atualizar os dados
     const updates = {
-      captain_name,
+      captain_name: 'Draft',
       player_name,
       premier_points: Number(premier_points),
       steam_id,

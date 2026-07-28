@@ -25,7 +25,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   // Player Form State (used for both register and edit)
   const [playerForm, setPlayerForm] = useState({
     id: '', // Used for edit
-    captain_name: 'Qualquer',
     player_name: '',
     premier_points: '',
     steam_id: '',
@@ -46,7 +45,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       setErrorMsg('');
       setPlayerForm({
         id: '',
-        captain_name: 'Qualquer',
         player_name: '',
         premier_points: '',
         steam_id: '',
@@ -133,7 +131,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
         if (p) {
           setPlayerForm({
             id: p.id,
-            captain_name: p.captain_name || 'Qualquer',
             player_name: p.player_name || '',
             premier_points: p.premier_points?.toString() || '',
             steam_id: p.steam_id || '',
@@ -257,7 +254,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
               <p className="text-slate-300 font-rajdhani font-semibold text-base max-w-md mx-auto">
                 {mode === 'edit' 
                   ? 'Suas informações foram salvas no banco de dados.'
-                  : 'Seu interesse foi registrado no Draft! O capitão selecionado verá seu perfil para o sorteio.'}
+                  : 'Seu interesse foi registrado no Draft! Os capitães verão seu perfil para o sorteio.'}
               </p>
             </div>
           ) : (
@@ -337,24 +334,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     </h4>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Select Captain */}
-                      <div className="sm:col-span-2">
-                        <label className="block text-xs font-rajdhani font-bold text-amber-400 uppercase mb-1">
-                          Selecione o Capitão de Sua Preferência <span className="text-slate-400 normal-case tracking-normal font-medium">(A escolha é anônima)</span> *
-                        </label>
-                        <select
-                          value={playerForm.captain_name}
-                          onChange={(e) => setPlayerForm({ ...playerForm, captain_name: e.target.value })}
-                          className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
-                        >
-                          <option value="Qualquer">Qualquer Capitão (Sem preferência)</option>
-                          <option value="Gusta">Capitão Gusta (Time Gusta)</option>
-                          <option value="HPS">Capitão HPS (Time HPS)</option>
-                          <option value="Léo">Capitão Léo (Time Léo)</option>
-                          <option value="Zane">Capitão Zane (Time Zane)</option>
-                        </select>
-                      </div>
-
                       <div>
                         <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
                           Seu Nick / Nome *

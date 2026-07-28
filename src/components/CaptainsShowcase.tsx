@@ -50,7 +50,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
               CAPITÃES & <span className="text-amber-400">JOGADORES DO DRAFT</span>
             </h2>
             <p className="text-slate-400 font-rajdhani font-semibold text-base sm:text-lg mt-1">
-              Escolha seu Capitão de preferência e cadastre seu interesse para entrar no Draft do torneio no Sábado (08/08).
+              Cadastre seu interesse para entrar no Draft do torneio no Sábado (08/08). Os capitães montarão suas equipes ao vivo!
             </p>
           </div>
 
@@ -132,27 +132,12 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                   {/* Body Content (Stats + Button) */}
                   <div className="px-6 pb-6 pt-3 flex flex-col bg-gradient-to-b from-[#0a0702] to-[#050401] relative z-40 flex-1">
                     {/* Stats Row */}
-                    <div className="flex items-center justify-between w-full px-2 mb-6 border-t border-b border-amber-900/40 py-3">
-                      <div className="flex flex-col items-center">
-                        <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Interessados</span>
-                        <span className="text-white font-oswald text-xl sm:text-2xl font-bold">{teamInterested.length}</span>
-                      </div>
-
-                      <div className="w-px h-8 bg-amber-900/40"></div>
+                    <div className="flex items-center justify-center w-full px-2 mb-6 border-t border-amber-900/40 py-3">
                       <div className="flex flex-col items-center">
                         <span className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Premier</span>
                         <CS2Badge points={c.premier_points} />
                       </div>
                     </div>
-
-                    {/* Action Button */}
-                    <button
-                      onClick={() => onOpenInterestModal(c.name)}
-                      className="w-full py-3 rounded-xl font-oswald font-bold text-sm uppercase tracking-wider text-black bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 transition-all flex items-center justify-center gap-2 group-hover:-translate-y-1 cursor-pointer"
-                    >
-                      <span>TENHO INTERESSE</span>
-                      <span className="text-lg leading-none mb-0.5">➦</span>
-                    </button>
                   </div>
                 </div>
               );
