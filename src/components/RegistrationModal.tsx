@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { UserPlus, X, CheckCircle2, AlertCircle, LogIn, Pencil, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { getInterestedPlayers, InterestedPlayer } from '@/lib/supabase';
+import type { InterestedPlayer } from '@/types';
 
 interface RegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  interestedPlayers: InterestedPlayer[];
 }
 
 type ModalMode = 'register' | 'login' | 'edit';
@@ -15,12 +16,14 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
+  interestedPlayers,
 }) => {
   const [mode, setMode] = useState<ModalMode>('register');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
-  const [players, setPlayers] = useState<InterestedPlayer[]>([]);
+  const [shouldRender, setShouldRender] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [playerForm, setPlayerForm] = useState({
     id: '', 
@@ -35,13 +38,40 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const [loginPassword, setLoginPassword] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isPointsDropdownOpen, setIsPointsDropdownOpen] = useState(false);
+  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
 
-  const filteredSearchPlayers = players.filter(p => 
+  const pointsOptions = [
+    { value: "", label: "-- Selecione seu Rating --" },
+    { value: "1000", label: "1.000 a 4.999 (Cinza)" },
+    { value: "5000", label: "5.000 a 9.999 (Azul Claro)" },
+    { value: "10000", label: "10.000 a 14.999 (Azul)" },
+    { value: "15000", label: "15.000 a 19.999 (Roxo)" },
+    { value: "20000", label: "20.000 a 24.999 (Rosa/Fúcsia)" },
+    { value: "25000", label: "25.000 a 29.999 (Vermelho)" },
+    { value: "30000", label: "30.000+ (Amarelo/Ouro)" },
+  ];
+
+  const roleOptions = [
+    { value: "Rifler", label: "Rifler" },
+    { value: "AWPer", label: "AWPer" },
+    { value: "Entry Fragger", label: "Entry Fragger" },
+    { value: "Support", label: "Support" },
+    { value: "Lurker", label: "Lurker" },
+    { value: "Flex", label: "Flex (Versátil)" },
+    { value: "IGL", label: "IGL (Líder em jogo)" },
+    { value: "Anchor", label: "Anchor (Âncora CT)" },
+  ];
+
+  const filteredSearchPlayers = interestedPlayers.filter(p => 
     p.player_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   useEffect(() => {
     if (isOpen) {
+      setShouldRender(true);
+      setTimeout(() => setIsVisible(true), 10);
+      
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setMode('register');
       setSubmittedSuccess(false);
@@ -58,16 +88,15 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       setSelectedPlayerId('');
       setSearchQuery('');
       setIsDropdownOpen(false);
-      
-      const fetchPlayers = async () => {
-        const data = await getInterestedPlayers();
-        setPlayers(data);
-      };
-      fetchPlayers();
+      setIsPointsDropdownOpen(false);
+      setIsRoleDropdownOpen(false);
+    } else {
+      setIsVisible(false);
+      setTimeout(() => setShouldRender(false), 300);
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +160,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
       const res = await response.json();
 
       if (response.ok && res.success) {
-        const p = players.find(p => p.id === selectedPlayerId);
+        const p = interestedPlayers.find(p => p.id === selectedPlayerId);
         if (p) {
           setPlayerForm({
             id: p.id,
@@ -200,8 +229,8 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8">
+    <div className={`fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ease-out ${isVisible ? 'bg-black/90 opacity-100' : 'bg-black/0 opacity-0 pointer-events-none'}`}>
+      <div className={`relative w-full max-w-2xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8 transition-all duration-300 ease-out transform ${isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}>
         
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
@@ -283,7 +312,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         <input
                           type="text"
                           placeholder="Digite para buscar..."
-                          value={isDropdownOpen ? searchQuery : (players.find(p => p.id === selectedPlayerId)?.player_name || '')}
+                          value={isDropdownOpen ? searchQuery : (interestedPlayers.find(p => p.id === selectedPlayerId)?.player_name || '')}
                           onFocus={() => {
                             setIsDropdownOpen(true);
                             setSearchQuery('');
@@ -386,21 +415,36 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
                           Pontos no Premier (CS2) *
                         </label>
-                        <select
-                          required
-                          value={playerForm.premier_points}
-                          onChange={(e) => setPlayerForm({ ...playerForm, premier_points: e.target.value })}
-                          className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
-                        >
-                          <option value="">-- Selecione seu Rating --</option>
-                          <option value="1000">1.000 a 4.999 (Cinza)</option>
-                          <option value="5000">5.000 a 9.999 (Azul Claro)</option>
-                          <option value="10000">10.000 a 14.999 (Azul)</option>
-                          <option value="15000">15.000 a 19.999 (Roxo)</option>
-                          <option value="20000">20.000 a 24.999 (Rosa/Fúcsia)</option>
-                          <option value="25000">25.000 a 29.999 (Vermelho)</option>
-                          <option value="30000">30.000+ (Amarelo/Ouro)</option>
-                        </select>
+                        <div className="relative">
+                          <div
+                            tabIndex={0}
+                            onBlur={() => setTimeout(() => setIsPointsDropdownOpen(false), 200)}
+                            onClick={() => { setIsPointsDropdownOpen(!isPointsDropdownOpen); setIsRoleDropdownOpen(false); }}
+                            className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer flex items-center h-[46px]"
+                          >
+                            <span className={playerForm.premier_points ? "text-white" : "text-slate-400"}>
+                              {playerForm.premier_points ? pointsOptions.find(o => o.value === playerForm.premier_points)?.label : "-- Selecione seu Rating --"}
+                            </span>
+                            <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 pointer-events-none" />
+                          </div>
+
+                          {isPointsDropdownOpen && (
+                            <div className="absolute z-50 w-full mt-1 bg-[#0b0e14] border border-slate-700/60 rounded-lg shadow-xl max-h-48 overflow-y-auto custom-scrollbar">
+                              {pointsOptions.filter(o => o.value !== "").map(o => (
+                                <div
+                                  key={o.value}
+                                  className="px-4 py-2.5 hover:bg-amber-500/10 cursor-pointer text-white font-rajdhani text-sm border-b border-slate-800 last:border-0"
+                                  onClick={() => {
+                                    setPlayerForm({ ...playerForm, premier_points: o.value });
+                                    setIsPointsDropdownOpen(false);
+                                  }}
+                                >
+                                  {o.label}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
 
                       <div>
@@ -420,20 +464,36 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         <label className="block text-xs font-rajdhani font-bold text-slate-300 uppercase mb-1">
                           Função Principal (Opcional)
                         </label>
-                        <select
-                          value={playerForm.role}
-                          onChange={(e) => setPlayerForm({ ...playerForm, role: e.target.value })}
-                          className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer"
-                        >
-                          <option value="Rifler">Rifler</option>
-                          <option value="AWPer">AWPer</option>
-                          <option value="Entry Fragger">Entry Fragger</option>
-                          <option value="Support">Support</option>
-                          <option value="Lurker">Lurker</option>
-                          <option value="Flex">Flex (Versátil)</option>
-                          <option value="IGL">IGL (Líder em jogo)</option>
-                          <option value="Anchor">Anchor (Âncora CT)</option>
-                        </select>
+                        <div className="relative">
+                          <div
+                            tabIndex={0}
+                            onBlur={() => setTimeout(() => setIsRoleDropdownOpen(false), 200)}
+                            onClick={() => { setIsRoleDropdownOpen(!isRoleDropdownOpen); setIsPointsDropdownOpen(false); }}
+                            className="w-full pl-4 pr-10 py-3 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all shadow-inner cursor-pointer flex items-center h-[46px]"
+                          >
+                            <span>
+                              {roleOptions.find(o => o.value === playerForm.role)?.label || "Rifler"}
+                            </span>
+                            <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 pointer-events-none" />
+                          </div>
+
+                          {isRoleDropdownOpen && (
+                            <div className="absolute z-[60] w-full mt-1 bg-[#0b0e14] border border-slate-700/60 rounded-lg shadow-xl max-h-48 overflow-y-auto custom-scrollbar">
+                              {roleOptions.map(o => (
+                                <div
+                                  key={o.value}
+                                  className="px-4 py-2.5 hover:bg-amber-500/10 cursor-pointer text-white font-rajdhani text-sm border-b border-slate-800 last:border-0"
+                                  onClick={() => {
+                                    setPlayerForm({ ...playerForm, role: o.value });
+                                    setIsRoleDropdownOpen(false);
+                                  }}
+                                >
+                                  {o.label}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
 
                       {mode === 'register' && (

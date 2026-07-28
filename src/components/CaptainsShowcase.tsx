@@ -1,43 +1,23 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { UserPlus, Users } from 'lucide-react';
 import { PlayersListModal } from './PlayersListModal';
-import { getCaptains, getInterestedPlayers, CaptainProfile, InterestedPlayer } from '@/lib/supabase';
 import { CS2Badge } from './CS2Badge';
+import type { CaptainProfile, InterestedPlayer } from '@/types';
 
 interface CaptainsShowcaseProps {
   onOpenInterestModal: (captainName?: string) => void;
-  refreshTrigger: number;
+  captains: CaptainProfile[];
+  interestedPlayers: InterestedPlayer[];
 }
 
 export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
   onOpenInterestModal,
-  refreshTrigger,
+  captains,
+  interestedPlayers,
 }) => {
-  const [captains, setCaptains] = useState<CaptainProfile[]>([]);
-  const [interestedPlayers, setInterestedPlayers] = useState<InterestedPlayer[]>([]);
-  const [loading, setLoading] = useState(true);
   const [playersModalOpen, setPlayersModalOpen] = useState(false);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const caps = await getCaptains();
-      const players = await getInterestedPlayers();
-      setCaptains(caps);
-      setInterestedPlayers(players);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchData();
-  }, [refreshTrigger]);
 
   return (
     <section id="capitaes" className="py-20 bg-[#0b0e14] relative border-t border-slate-800">
@@ -78,17 +58,23 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
           players={interestedPlayers} 
         />
 
-        {loading ? (
-          <div className="py-16 text-center text-slate-400 font-rajdhani font-bold text-lg animate-pulse">
-            Carregando Capitães e inscritos do Draft...
-          </div>
-        ) : (
+
           <div className="flex flex-wrap justify-center items-center gap-6 lg:gap-8 py-10">
             {captains.map((c, idx) => {
+              const captainNameLower = c.name.toLowerCase();
+              let steamUrl = '';
+              if (captainNameLower.includes('gusta')) steamUrl = 'https://steamcommunity.com/id/Gusta-_/';
+              else if (captainNameLower.includes('zane')) steamUrl = 'https://steamcommunity.com/profiles/76561198981339882/';
+              else if (captainNameLower.includes('leo') || captainNameLower.includes('léo')) steamUrl = 'https://steamcommunity.com/id/onesouza/';
+              else if (captainNameLower.includes('hps')) steamUrl = 'https://steamcommunity.com/id/hpscs/';
+
               return (
-                <div
+                <a
                   key={c.id || idx}
-                  className="relative hover:z-10 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(245,158,11,0.2)] transition-all duration-500 w-[280px] sm:w-[320px] rounded-2xl bg-[#050401] border border-amber-500/20 shadow-[0_15px_40px_rgba(0,0,0,0.9)] overflow-hidden group flex flex-col"
+                  href={steamUrl || '#'}
+                  target={steamUrl ? '_blank' : undefined}
+                  rel={steamUrl ? 'noopener noreferrer' : undefined}
+                  className={`relative hover:z-10 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(245,158,11,0.2)] transition-all duration-500 w-[280px] sm:w-[320px] rounded-2xl bg-[#050401] border border-amber-500/20 shadow-[0_15px_40px_rgba(0,0,0,0.9)] overflow-hidden group flex flex-col block ${steamUrl ? 'cursor-pointer' : 'cursor-default'}`}
                 >
                   <div className="h-[340px] relative flex flex-col justify-end overflow-hidden">
                     <div 
@@ -96,16 +82,16 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                       style={{ backgroundImage: `url('/backgrounds/captain-card.png')` }}
                     />
                     
-                    <div className="absolute bottom-0 left-0 right-0 flex justify-center z-10 pointer-events-none">
+                    <div className="absolute -bottom-2 left-0 right-0 flex justify-center z-10 pointer-events-none">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={c.avatar_url || '/logo.png'}
                         alt={`Capitão ${c.name}`}
-                        className="h-[340px] w-auto object-contain opacity-90 group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-700"
+                        className="h-[348px] w-auto object-contain opacity-90 origin-bottom group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                       />
                     </div>
 
-                    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0702] via-[#0a0702]/80 to-transparent z-20 pointer-events-none" />
+                    <div className="absolute -bottom-[2px] left-0 right-0 h-32 bg-gradient-to-t from-[#0a0702] via-[#0a0702]/80 to-transparent z-20 pointer-events-none" />
 
                     <div className="relative z-30 text-center pb-4">
                       <h3 className="font-oswald font-black text-3xl sm:text-4xl text-white tracking-wide uppercase drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] group-hover:text-amber-400 transition-colors">
@@ -117,7 +103,7 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                     </div>
                   </div>
 
-                  <div className="px-6 py-4 flex flex-col bg-gradient-to-b from-[#0a0702] to-[#050401] relative z-40 flex-1">
+                  <div className="px-6 py-4 flex flex-col bg-gradient-to-b from-[#0a0702] to-[#050401] relative z-40 flex-1 -mt-[2px]">
                     <div className="flex-1 flex items-center justify-center w-full border-t border-amber-900/40 pt-4">
                       <div className="flex flex-col items-center">
                         <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-widest mb-1.5 font-bold">Premier</span>
@@ -125,11 +111,10 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
               );
             })}
           </div>
-        )}
 
       </div>
     </section>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Users, Trash2, Crosshair, Swords, Brain, Zap, ShieldPlus, EyeOff, Anchor, RefreshCw } from 'lucide-react';
-import type { InterestedPlayer } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
+import type { InterestedPlayer } from '@/types';
 import { CS2Badge } from './CS2Badge';
 
 interface PlayersListModalProps {
@@ -14,6 +15,25 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
   onClose,
   players,
 }) => {
+  const router = useRouter();
+  const [playerToDelete, setPlayerToDelete] = React.useState<{ id: string, name: string } | null>(null);
+  const [deletePassword, setDeletePassword] = React.useState('');
+  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [deleteError, setDeleteError] = React.useState('');
+  
+  const [shouldRender, setShouldRender] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      setTimeout(() => setIsVisible(true), 10);
+    } else {
+      setIsVisible(false);
+      setTimeout(() => setShouldRender(false), 300);
+    }
+  }, [isOpen]);
+
   const renderRole = (role: string) => {
     const r = role.toLowerCase();
     let Icon = Swords;
@@ -35,39 +55,50 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
     );
   };
 
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
 
   const captainNames = ['gusta', 'hps', 'léo', 'leo', 'zane'];
   const filteredPlayers = players.filter(
     (p) => !captainNames.some((c) => p.player_name.toLowerCase().includes(c))
   ).sort((a, b) => b.premier_points - a.premier_points);
 
-  const handleDelete = async (id: string, name: string) => {
-    const password = window.prompt(`Digite a senha de administrador para remover ${name}:`);
-    if (!password) return;
+  const confirmDelete = async (id: string, name: string) => {
+    setPlayerToDelete({ id, name });
+    setDeletePassword('');
+    setDeleteError('');
+  };
+
+  const executeDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!playerToDelete || !deletePassword) return;
+
+    setIsDeleting(true);
+    setDeleteError('');
 
     try {
       const res = await fetch('/api/delete-player', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, password })
+        body: JSON.stringify({ id: playerToDelete.id, password: deletePassword })
       });
       const data = await res.json();
 
       if (data.success) {
-        alert('Jogador removido com sucesso!');
-        window.location.reload(); 
+        setPlayerToDelete(null);
+        router.refresh(); 
       } else {
-        alert(`Erro: ${data.error}`);
+        setDeleteError(data.error || 'Erro ao remover.');
       }
     } catch {
-      alert('Erro inesperado ao remover jogador.');
+      setDeleteError('Erro inesperado ao remover jogador.');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
-      <div className="relative w-full max-w-3xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8">
+    <div className={`fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ease-out ${isVisible ? 'bg-black/90 opacity-100' : 'bg-black/0 opacity-0 pointer-events-none'}`}>
+      <div className={`relative w-full max-w-3xl bg-[#111622] border border-amber-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.25)] my-8 transition-all duration-300 ease-out transform ${isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}>
         
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0b0e14]">
           <div className="flex items-center gap-3">
@@ -122,7 +153,7 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
                       </span>
                     )}
                     <button
-                      onClick={() => handleDelete(player.id, player.player_name)}
+                      onClick={() => confirmDelete(player.id, player.player_name)}
                       className="p-1.5 rounded-md bg-rose-500/5 hover:bg-rose-500/20 text-rose-500/70 hover:text-rose-500 transition-colors cursor-pointer"
                       title="Remover inscrito"
                     >
@@ -144,6 +175,62 @@ export const PlayersListModal: React.FC<PlayersListModalProps> = ({
           )}
         </div>
       </div>
+
+      {playerToDelete && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4 transition-opacity duration-200 ease-out">
+          <div className="w-full max-w-sm bg-[#111622] border border-slate-700/60 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-5 py-4 border-b border-slate-800 flex justify-between items-center bg-[#0b0e14]">
+              <h4 className="font-oswald font-bold text-white uppercase flex items-center gap-2">
+                <Trash2 className="w-4 h-4 text-rose-500" />
+                Remover Jogador
+              </h4>
+              <button
+                onClick={() => setPlayerToDelete(null)}
+                className="text-slate-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={executeDelete} className="p-5 space-y-4">
+              <div>
+                <p className="text-slate-300 font-rajdhani text-sm mb-3">
+                  Digite a senha de administrador para remover <strong className="text-white">{playerToDelete.name}</strong>:
+                </p>
+                <input
+                  type="password"
+                  required
+                  placeholder="Senha do administrador"
+                  value={deletePassword}
+                  onChange={(e) => setDeletePassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#0b0e14] border border-slate-700/60 text-white font-rajdhani text-sm focus:border-amber-400/80 focus:ring-1 focus:ring-amber-400/50 focus:outline-none transition-all"
+                  autoFocus
+                />
+                {deleteError && (
+                  <p className="text-rose-400 text-xs mt-2 font-bold">{deleteError}</p>
+                )}
+              </div>
+              
+              <div className="flex gap-3 justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={() => setPlayerToDelete(null)}
+                  className="px-4 py-2 text-xs font-rajdhani font-bold uppercase text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={isDeleting || !deletePassword}
+                  className="px-4 py-2 text-xs font-rajdhani font-bold uppercase text-white bg-rose-600 hover:bg-rose-500 rounded transition-colors disabled:opacity-50"
+                >
+                  {isDeleting ? 'Removendo...' : 'Confirmar'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
