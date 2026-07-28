@@ -88,10 +88,6 @@ export const CaptainsShowcase: React.FC<CaptainsShowcaseProps> = ({
         ) : (
           <div className="flex flex-wrap justify-center items-center gap-6 lg:gap-8 py-10">
             {captains.map((c, idx) => {
-              const teamInterested = interestedPlayers.filter(
-                (p) => p.captain_name.toLowerCase() === c.name.toLowerCase()
-              );
-
               return (
                 <div
                   key={c.id || idx}
