@@ -183,13 +183,13 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
           <div className="flex items-center gap-8 border-b border-white/5 text-xs font-bold uppercase tracking-wider">
             <button 
               onClick={() => setActiveTab('jogadores')}
-              className={`pb-4 transition-colors ${activeTab === 'jogadores' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`pb-4 transition-colors cursor-pointer ${activeTab === 'jogadores' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
             >
               Jogadores
             </button>
             <button 
               onClick={() => setActiveTab('capitaes')}
-              className={`pb-4 transition-colors ${activeTab === 'capitaes' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`pb-4 transition-colors cursor-pointer ${activeTab === 'capitaes' ? 'text-white border-b-2 border-white' : 'text-slate-500 hover:text-slate-300'}`}
             >
               Capitães
             </button>
@@ -199,7 +199,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
         {/* List Actions */}
         <div className="px-6 py-4 flex items-center gap-4 text-xs font-bold text-slate-400">
           <span>{filteredAndSearchedPlayers.length} Resultados</span>
-          <button className="flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded bg-[#121214] hover:bg-white/5 hover:text-white transition-colors uppercase tracking-wider">
+          <button className="flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded bg-[#121214] hover:bg-white/5 hover:text-white transition-colors uppercase tracking-wider cursor-pointer">
             <Users className="w-3.5 h-3.5" />
             Adicionar à lista
           </button>
@@ -207,7 +207,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
           <button 
             onClick={handleSync}
             disabled={isSyncing}
-            className="flex items-center gap-2 px-3 py-1.5 border border-amber-500/30 rounded bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 transition-colors uppercase tracking-wider ml-auto disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-1.5 border border-amber-500/30 rounded bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 transition-colors uppercase tracking-wider ml-auto disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
             {isSyncing ? 'Sincronizando...' : 'Sincronizar Dados Reais'}
@@ -298,7 +298,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
              <div className="flex items-center gap-2">
                 <button 
                   onClick={() => setSelectedPlayer(null)}
-                  className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors lg:hidden"
+                  className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors lg:hidden cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -306,14 +306,14 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
                   <button 
                     onClick={handlePrevPlayer}
                     disabled={filteredAndSearchedPlayers.findIndex(p => p.id === selectedPlayer.id) === 0}
-                    className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+                    className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={handleNextPlayer}
                     disabled={filteredAndSearchedPlayers.findIndex(p => p.id === selectedPlayer.id) === filteredAndSearchedPlayers.length - 1}
-                    className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+                    className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed"
                   >
                     <ChevronLeft className="w-4 h-4 rotate-180" />
                   </button>
@@ -321,7 +321,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
              </div>
             <button 
               onClick={() => setSelectedPlayer(null)}
-              className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-white transition-colors"
+              className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -345,10 +345,10 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
             </div>
 
             {/* Profile Tabs */}
-            <div className="flex items-center gap-6 border-b border-white/5 text-xs font-bold uppercase tracking-wider mb-6">
-              <button className="pb-3 text-white border-b-2 border-white">Overview</button>
-              <button className="pb-3 text-slate-500 hover:text-slate-300 transition-colors">Stats Performance</button>
-              <button className="pb-3 text-slate-500 hover:text-slate-300 transition-colors">Matches</button>
+            <div className="flex gap-6 border-b border-white/5 text-xs font-bold uppercase tracking-wider mb-6">
+              <button className="pb-3 text-white border-b-2 border-white cursor-pointer">Overview</button>
+              <button className="pb-3 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">Stats Performance</button>
+              <button className="pb-3 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer">Matches</button>
             </div>
 
             <div className="space-y-6">
