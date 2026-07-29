@@ -1,8 +1,24 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { ShieldAlert, CheckCircle2, Clock } from 'lucide-react';
+
+export interface VetoAction {
+  action: string;
+  map: string;
+  by: string;
+}
+
+export interface MatchVetoRoom {
+  id: string;
+  format: string;
+  status: string;
+  current_turn: string | null;
+  captain1_id: string;
+  captain2_id: string;
+  actions: VetoAction[];
+}
 
 const MAPS = [
   { name: 'Mirage', bg: 'from-orange-500/20 to-yellow-600/20', img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=800&auto=format&fit=crop' },
@@ -14,29 +30,43 @@ const MAPS = [
   { name: 'Nuke', bg: 'from-blue-400/20 to-cyan-700/20', img: 'https://images.unsplash.com/photo-1559828738-f99a9a08419f?q=80&w=800&auto=format&fit=crop' }
 ];
 
-export function VetoRoom({ initialRoom }: { initialRoom: any }) {
-  const [room, setRoom] = useState(initialRoom);
+export function VetoRoom({ initialRoom }: { initialRoom: MatchVetoRoom }) {
+  const [room, setRoom] = useState<MatchVetoRoom>(initialRoom);
   const [userId, setUserId] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isSupabaseConfigured() || !supabase) return;
+
     supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id || null));
 
     const channel = supabase.channel(`veto-${room.id}`)
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'match_vetoes', filter: `id=eq.${room.id}` }, (payload) => {
-        setRoom(payload.new);
+        setRoom(payload.new as MatchVetoRoom);
       })
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    return () => { if (supabase) supabase.removeChannel(channel); };
   }, [room.id]);
 
   const handleMapClick = async (mapName: string) => {
     if (room.status === 'completed') return;
-    if (room.current_turn !== userId) return alert('Não é o seu turno!');
-    if (room.actions.some((a: any) => a.map === mapName)) return;
+    if (room.current_turn !== userId) {
+      setErrorMsg('Não é o seu turno!');
+      setTimeout(() => setErrorMsg(null), 3000);
+      return;
+    }
+    const actions = room?.actions || [];
+    if (actions.some((a) => a.map === mapName)) return;
+
+    if (!isSupabaseConfigured() || !supabase) {
+      setErrorMsg('Erro de conexão (Supabase não configurado).');
+      setTimeout(() => setErrorMsg(null), 3000);
+      return;
+    }
 
     const isMD3 = room.format === 'MD3';
-    const actionCount = room.actions.length;
+    const actionCount = actions.length;
 
     let actionType = 'ban';
     if (isMD3) {
@@ -45,7 +75,7 @@ export function VetoRoom({ initialRoom }: { initialRoom: any }) {
       }
     }
 
-    const newActions = [...room.actions, { action: actionType, map: mapName, by: userId }];
+    const newActions: VetoAction[] = [...actions, { action: actionType, map: mapName, by: userId }];
     
     let nextTurn = room.current_turn === room.captain1_id ? room.captain2_id : room.captain1_id;
     
@@ -79,7 +109,7 @@ export function VetoRoom({ initialRoom }: { initialRoom: any }) {
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header Section */}
-        <div className="text-center space-y-4 mt-8 md:mt-12 mb-12">
+        <div className="text-center space-y-4 mt-8 md:mt-12 mb-12 relative">
           <h1 className="text-5xl md:text-6xl font-black font-oswald uppercase tracking-wider bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(79,70,229,0.5)]">
             Veto de Mapas ({room.format})
           </h1>
@@ -95,12 +125,19 @@ export function VetoRoom({ initialRoom }: { initialRoom: any }) {
             <span className="text-xl font-bold uppercase tracking-wide">{turnLabel}</span>
             {isMyTurn && <span className="flex h-3 w-3 relative"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span></span>}
           </div>
+
+          {errorMsg && (
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-4 py-2 bg-rose-500/20 border border-rose-500/50 text-rose-400 rounded-lg shadow-lg font-bold backdrop-blur-md animate-fade-in-down">
+              {errorMsg}
+            </div>
+          )}
         </div>
 
         {/* Maps Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {MAPS.map(map => {
-            const action = room.actions.find((a: any) => a.map === map.name);
+            const actions = room?.actions || [];
+            const action = actions.find((a) => a.map === map.name);
             const isBanned = action?.action === 'ban';
             const isPicked = action?.action === 'pick';
             const isSelectable = !action && room.status !== 'completed' && isMyTurn;
