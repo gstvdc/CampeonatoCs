@@ -25,7 +25,7 @@ const MAPS = [
   { name: 'Dust 2', bg: 'from-amber-500/20 to-orange-700/20', img: 'https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=800&auto=format&fit=crop' },
   { name: 'Anubis', bg: 'from-yellow-600/20 to-stone-700/20', img: 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=800&auto=format&fit=crop' },
   { name: 'Inferno', bg: 'from-red-500/20 to-orange-600/20', img: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=800&auto=format&fit=crop' },
-  { name: 'Vertigo', bg: 'from-sky-500/20 to-blue-700/20', img: 'https://images.unsplash.com/photo-1541888075865-985bb0479708?q=80&w=800&auto=format&fit=crop' },
+  { name: 'Cache', bg: 'from-sky-500/20 to-blue-700/20', img: 'https://images.unsplash.com/photo-1541888075865-985bb0479708?q=80&w=800&auto=format&fit=crop' },
   { name: 'Ancient', bg: 'from-emerald-500/20 to-green-800/20', img: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=800&auto=format&fit=crop' },
   { name: 'Nuke', bg: 'from-blue-400/20 to-cyan-700/20', img: 'https://images.unsplash.com/photo-1559828738-f99a9a08419f?q=80&w=800&auto=format&fit=crop' }
 ];
@@ -89,15 +89,20 @@ export function VetoRoom({ initialRoom }: { initialRoom: MatchVetoRoom }) {
       nextTurn = null;
     }
 
-    await supabase.from('match_vetoes').update({
+    const { error } = await supabase.from('match_vetoes').update({
       actions: newActions,
       current_turn: nextTurn,
       status: finalStatus
     }).eq('id', room.id);
+
+    if (error) {
+      setErrorMsg('Falha ao registrar voto no servidor.');
+      setTimeout(() => setErrorMsg(null), 3000);
+    }
   };
 
   const getCaptainName = (id: string | null) => {
-    if (!id) return 'Sistema';
+    if (!id || id === 'system') return 'Sistema';
     return id === room.captain1_id ? 'Capitão 1' : 'Capitão 2';
   };
 
@@ -127,7 +132,7 @@ export function VetoRoom({ initialRoom }: { initialRoom: MatchVetoRoom }) {
           </div>
 
           {errorMsg && (
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-4 py-2 bg-rose-500/20 border border-rose-500/50 text-rose-400 rounded-lg shadow-lg font-bold backdrop-blur-md animate-fade-in-down">
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-4 py-2 bg-rose-500/20 border border-rose-500/50 text-rose-400 rounded-lg shadow-lg font-bold backdrop-blur-md transition-opacity">
               {errorMsg}
             </div>
           )}
