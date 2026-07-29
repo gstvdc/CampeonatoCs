@@ -22,22 +22,27 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
   const [isSyncing, setIsSyncing] = useState(false);
 
   const handleCreateVeto = async () => {
-    if (players.length < 2) return alert('Need at least 2 players');
+    if (!players || players.length < 2) return alert('Need at least 2 players');
     const c1 = prompt('ID do Capitão 1:', players[0]?.user_id || players[0]?.id);
     const c2 = prompt('ID do Capitão 2:', players[1]?.user_id || players[1]?.id);
     const format = prompt('Formato (MD1 ou MD3):', 'MD1');
     
     if (!c1 || !c2 || !format) return;
 
-    const res = await fetch('/api/veto/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ captain1_id: c1, captain2_id: c2, format: format.toUpperCase() })
-    });
-    const data = await res.json();
-    if (data.id) {
-      router.push(`/veto/${data.id}`);
-    } else {
+    try {
+      const res = await fetch('/api/veto/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ captain1_id: c1, captain2_id: c2, format: format.toUpperCase() })
+      });
+      const data = await res.json();
+      if (data.id) {
+        router.push(`/veto/${data.id}`);
+      } else {
+        alert('Erro ao criar sala de veto');
+      }
+    } catch (e) {
+      console.error(e);
       alert('Erro ao criar sala de veto');
     }
   };
@@ -59,7 +64,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
     }
   };
 
-  const filteredAndSearchedPlayers = players.filter(p => {
+  const filteredAndSearchedPlayers = (players || []).filter(p => {
     const matchesSearch = p.player_name.toLowerCase().includes(searchQuery.toLowerCase());
     const isCaptain = ['GUSTA', 'HPS', 'SOUZ', 'ZANE'].includes(p.player_name.toUpperCase());
     

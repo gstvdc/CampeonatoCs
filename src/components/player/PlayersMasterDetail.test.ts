@@ -1,4 +1,4 @@
-import { test, describe, beforeEach } from 'node:test';
+import { test, describe, beforeEach, after } from 'node:test';
 import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -28,6 +28,8 @@ function wrapJsx(orig: any) {
 
 // Set up custom require hook for TSX/TS files and Next/lucide mocks
 const origRequire = (Module.prototype as any).require;
+const origTsxExt = (Module as any)._extensions['.tsx'];
+const origTsExt = (Module as any)._extensions['.ts'];
 
 let pushUrl: string | null = null;
 let alertMsg: string | null = null;
@@ -102,6 +104,22 @@ function renderAndGetVetoHandler(players: any[]): () => Promise<void> {
 }
 
 describe('PlayersMasterDetail - Component Rendering & Veto Creation', () => {
+  after(() => {
+    (Module.prototype as any).require = origRequire;
+    if (origTsxExt !== undefined) {
+      (Module as any)._extensions['.tsx'] = origTsxExt;
+    } else {
+      delete (Module as any)._extensions['.tsx'];
+    }
+    if (origTsExt !== undefined) {
+      (Module as any)._extensions['.ts'] = origTsExt;
+    } else {
+      delete (Module as any)._extensions['.ts'];
+    }
+    (jsxRuntime as any).jsx = origJsx;
+    (jsxRuntime as any).jsxs = origJsxs;
+  });
+
   beforeEach(() => {
     pushUrl = null;
     alertMsg = null;
@@ -132,7 +150,7 @@ describe('PlayersMasterDetail - Component Rendering & Veto Creation', () => {
     assert.ok(html.includes('Criar Votação'), 'Renders Criar Votação button');
   });
 
-  test('handleCreateVeto alerts when fewer than 2 players exist', async () => {
+  test('handleCreateVeto alerts when fewer than 2 players exist or players is null', async () => {
     const players = [
       { id: '1', user_id: 'u1', player_name: 'Fallen' },
     ];
@@ -144,6 +162,10 @@ describe('PlayersMasterDetail - Component Rendering & Veto Creation', () => {
     assert.strictEqual(alertMsg, 'Need at least 2 players');
     assert.strictEqual(fetchCalls.length, 0, 'No fetch called');
     assert.strictEqual(pushUrl, null, 'No navigation triggered');
+
+    const handleCreateVetoNull = renderAndGetVetoHandler(null as any);
+    await handleCreateVetoNull();
+    assert.strictEqual(alertMsg, 'Need at least 2 players');
   });
 
   test('handleCreateVeto cancels when prompt input is missing/cancelled', async () => {
@@ -201,4 +223,23 @@ describe('PlayersMasterDetail - Component Rendering & Veto Creation', () => {
     assert.strictEqual(alertMsg, 'Erro ao criar sala de veto');
     assert.strictEqual(pushUrl, null, 'No navigation triggered when API fails');
   });
+
+  test('handleCreateVeto alerts when fetch throws a network error', async () => {
+    (global as any).fetch = async () => {
+      throw new Error('Network error');
+    };
+
+    const players = [
+      { id: 'p1', user_id: 'cap1-uuid', player_name: 'Fallen' },
+      { id: 'p2', user_id: 'cap2-uuid', player_name: 'fer' },
+    ];
+    promptQueue = ['cap1-uuid', 'cap2-uuid', 'MD1'];
+
+    const handleCreateVeto = renderAndGetVetoHandler(players);
+    await handleCreateVeto();
+
+    assert.strictEqual(alertMsg, 'Erro ao criar sala de veto');
+    assert.strictEqual(pushUrl, null, 'No navigation triggered when network fails');
+  });
 });
+
