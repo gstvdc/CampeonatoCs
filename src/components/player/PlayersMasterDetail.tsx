@@ -6,8 +6,10 @@ import { Swords, Crosshair, Brain, Zap, ShieldPlus, EyeOff, Anchor, RefreshCw, T
 import { PlayerRadarChart } from './RadarChart';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
+  const router = useRouter();
   const [selectedPlayer, setSelectedPlayer] = useState<any | null>(null);
   const [matches, setMatches] = useState<any[]>([]);
   const [loadingMatches, setLoadingMatches] = useState(false);
@@ -18,6 +20,27 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
   const [detailTab, setDetailTab] = useState<'overview' | 'matches'>('overview');
   const [resultsPerPage, setResultsPerPage] = useState('20');
   const [isSyncing, setIsSyncing] = useState(false);
+
+  const handleCreateVeto = async () => {
+    if (players.length < 2) return alert('Need at least 2 players');
+    const c1 = prompt('ID do Capitão 1:', players[0]?.user_id || players[0]?.id);
+    const c2 = prompt('ID do Capitão 2:', players[1]?.user_id || players[1]?.id);
+    const format = prompt('Formato (MD1 ou MD3):', 'MD1');
+    
+    if (!c1 || !c2 || !format) return;
+
+    const res = await fetch('/api/veto/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ captain1_id: c1, captain2_id: c2, format: format.toUpperCase() })
+    });
+    const data = await res.json();
+    if (data.id) {
+      router.push(`/veto/${data.id}`);
+    } else {
+      alert('Erro ao criar sala de veto');
+    }
+  };
 
   const handleSync = async () => {
     setIsSyncing(true);
@@ -193,6 +216,10 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
         {/* List Actions */}
         <div className="px-6 py-4 flex items-center gap-4 text-xs font-bold text-slate-400">
           <span>{filteredAndSearchedPlayers.length} Resultados</span>
+          
+          <button onClick={handleCreateVeto} className="flex items-center gap-2 px-3 py-1.5 border border-purple-500/30 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 transition-colors uppercase tracking-wider ml-2">
+            Criar Votação
+          </button>
           
           <button 
             onClick={handleSync}
