@@ -7,6 +7,7 @@ import { PlayerRadarChart } from './RadarChart';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
   const router = useRouter();
@@ -21,29 +22,54 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
   const [resultsPerPage, setResultsPerPage] = useState('20');
   const [isSyncing, setIsSyncing] = useState(false);
 
-  const handleCreateVeto = async () => {
+  const [isVetoModalOpen, setIsVetoModalOpen] = useState(false);
+  const [vetoFormat, setVetoFormat] = useState('MD1');
+  const [captain1, setCaptain1] = useState('');
+  const [captain2, setCaptain2] = useState('');
+  const [isCreatingVeto, setIsCreatingVeto] = useState(false);
+
+  const handleOpenVetoModal = () => {
     if (!players || players.length < 2) return alert('Need at least 2 players');
-    const c1 = prompt('ID do Capitão 1:', players[0]?.user_id || players[0]?.id);
-    const c2 = prompt('ID do Capitão 2:', players[1]?.user_id || players[1]?.id);
-    const format = prompt('Formato (MD1 ou MD3):', 'MD1');
-    
-    if (!c1 || !c2 || !format) return;
+    setCaptain1(players[0]?.user_id || players[0]?.id || '');
+    setCaptain2(players[1]?.user_id || players[1]?.id || '');
+    setVetoFormat('MD1');
+    setIsVetoModalOpen(true);
+  };
+
+  const handleCreateVetoConfirm = async () => {
+    if (!captain1 || !captain2 || !vetoFormat) return;
+    setIsCreatingVeto(true);
 
     try {
-      const res = await fetch('/api/veto/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ captain1_id: c1, captain2_id: c2, format: format.toUpperCase() })
-      });
-      const data = await res.json();
-      if (data.id) {
-        router.push(`/veto/${data.id}`);
+      if (isSupabaseConfigured() && supabase) {
+        const { data, error } = await supabase
+          .from('match_vetoes')
+          .insert([{
+            captain1_id: captain1,
+            captain2_id: captain2,
+            format: vetoFormat,
+            status: 'in_progress',
+            current_turn: captain1,
+            actions: []
+          }])
+          .select()
+          .single();
+
+        if (error) throw error;
+        if (data?.id) {
+          router.push(`/veto/${data.id}`);
+        } else {
+          alert('Erro ao criar sala de veto');
+        }
       } else {
-        alert('Erro ao criar sala de veto');
+        alert('Banco de dados não configurado.');
       }
     } catch (e) {
-      console.error(e);
+      console.error('Create veto error:', e);
       alert('Erro ao criar sala de veto');
+    } finally {
+      setIsCreatingVeto(false);
+      setIsVetoModalOpen(false);
     }
   };
 
@@ -222,7 +248,7 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
         <div className="px-6 py-4 flex items-center gap-4 text-xs font-bold text-slate-400">
           <span>{filteredAndSearchedPlayers.length} Resultados</span>
           
-          <button onClick={handleCreateVeto} className="flex items-center gap-2 px-3 py-1.5 border border-purple-500/30 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 transition-colors uppercase tracking-wider ml-2">
+          <button onClick={handleOpenVetoModal} className="flex items-center gap-2 px-3 py-1.5 border border-purple-500/30 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 transition-colors uppercase tracking-wider ml-2">
             Criar Votação
           </button>
           
@@ -566,6 +592,72 @@ export const PlayersMasterDetail = ({ players }: { players: any[] }) => {
               </div>
               )}
 
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Veto Modal */}
+      {isVetoModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsVetoModalOpen(false)} />
+          <div className="relative bg-[#18181b] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl p-6">
+            <h3 className="text-2xl font-oswald font-black uppercase text-white mb-6">Criar Sala de Votação</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Capitão 1</label>
+                <select 
+                  value={captain1} 
+                  onChange={(e) => setCaptain1(e.target.value)}
+                  className="w-full bg-[#121214] border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-amber-500" 
+                >
+                  <option value="">Selecione o Capitão 1</option>
+                  {players.map(p => (
+                    <option key={p.user_id || p.id} value={p.user_id || p.id}>{p.player_name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Capitão 2</label>
+                <select 
+                  value={captain2} 
+                  onChange={(e) => setCaptain2(e.target.value)}
+                  className="w-full bg-[#121214] border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-amber-500" 
+                >
+                  <option value="">Selecione o Capitão 2</option>
+                  {players.map(p => (
+                    <option key={p.user_id || p.id} value={p.user_id || p.id}>{p.player_name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Formato</label>
+                <select 
+                  value={vetoFormat} 
+                  onChange={(e) => setVetoFormat(e.target.value)}
+                  className="w-full bg-[#121214] border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-amber-500"
+                >
+                  <option value="MD1">MD1 (Melhor de 1)</option>
+                  <option value="MD3">MD3 (Melhor de 3)</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 mt-8">
+              <button 
+                onClick={() => setIsVetoModalOpen(false)}
+                className="px-4 py-2 rounded-lg font-bold uppercase tracking-wider text-sm bg-white/5 hover:bg-white/10 transition-colors text-white"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={handleCreateVetoConfirm}
+                disabled={isCreatingVeto}
+                className="px-4 py-2 rounded-lg font-bold uppercase tracking-wider text-sm bg-purple-500 hover:bg-purple-600 transition-colors text-white disabled:opacity-50"
+              >
+                {isCreatingVeto ? 'Criando...' : 'Confirmar'}
+              </button>
             </div>
           </div>
         </div>

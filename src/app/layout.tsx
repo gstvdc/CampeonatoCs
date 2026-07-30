@@ -15,6 +15,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'Copa Lucas Moura 2ª Edição | Campeonato CS2 2026',
   description:
     'Site oficial da Copa Lucas Moura 2ª Edição de Counter-Strike 2. Confira a contagem regressiva, regulamento, transmissão ao vivo e confirme a presença do seu time gratuitamente!',
@@ -40,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="scroll-smooth">
+    <html lang="pt-BR" className="scroll-smooth" data-scroll-behavior="smooth">
       <body className={`${rajdhani.variable} ${oswald.variable} antialiased bg-[#050401] text-white selection:bg-amber-500/30 selection:text-amber-200`}>
         {children}
         <Toaster 

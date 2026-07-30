@@ -30,6 +30,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ id: data.id });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('Create veto error:', error);
+    return NextResponse.json({ error: 'Internal Server Error', details: String(error) }, { status: 500 });
   }
 }
