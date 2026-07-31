@@ -68,7 +68,7 @@ export async function getCaptains(): Promise<CaptainProfile[]> {
       const captainMapping: Record<string, Partial<CaptainProfile>> = {
         'GUSTA': { color: '#f59e0b', avatar_url: '/captains/gusta.png', team_name: 'TIME GUSTA' },
         'HPS': { color: '#3b82f6', avatar_url: '/captains/hps.png', team_name: 'TIME HPS' },
-        'SOUZ': { color: '#ef4444', avatar_url: '/captains/souz.png', team_name: 'TIME SOUZ' },
+        'SOUZ': { color: '#ef4444', avatar_url: '/captains/leo.png', team_name: 'TIME SOUZ' },
         'ZANE': { color: '#a855f7', avatar_url: '/captains/zane.png', team_name: 'TIME ZANE' },
       };
       
